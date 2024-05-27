@@ -236,3 +236,77 @@ Vrstvený architektonický styl (layered architecture) je běžně používaný 
 - **Komplexita:** Přidání více vrstev může zvýšit komplexitu návrhu a implementace.
 
 Tento architektonický styl je vhodný pro mnoho webových aplikací, zejména ty, které vyžadují jasné oddělení logiky a prezentace, snadnou údržbu a rozšiřitelnost.
+
+## What is a design pattern? What problem are design patterns solving? What types of design patterns exist? Why is it important to know the design patterns? Are there design antipatterns?
+
+### Co je návrhový vzor (design pattern)?
+
+- Návrhový vzor je **opakovatelné řešení** pro často se vyskytující problémy v oblasti softwarového návrhu.
+- Není to hotový návrh, ale **šablona** pro řešení problému, kterou lze přizpůsobit konkrétním situacím.
+
+### Jaký problém řeší návrhové vzory?
+
+- Návrhové vzory řeší problémy, které se vyskytují opakovaně při návrhu softwarových systémů.
+- Pomáhají **zlepšit kvalitu** kódu, **usnadnit komunikaci** mezi vývojáři a **urychlit vývoj**.
+
+### Typy návrhových vzorů:
+
+1. **Vzory pro tvorbu objektů (Creational Patterns)**:
+   - Řeší problémy spojené s procesem vytváření objektů.
+   - Příklady: Singleton, Factory Method, Abstract Factory, Builder, Prototype.
+   - <u>Factory Method:</u> Vzor Tovární metoda navrhuje nahradit přímé volání konstrukce objektu (pomocí operátoru new) voláním speciální tovární metody. Nemějte obavy: objekty se stále vytvářejí pomocí operátoru new, ale ten se volá zevnitř tovární metody. Objekty vrácené tovární metodou se často označují jako produkty.
+   - <u>Singleton:</u> Využijeme ho, když je potřeba, aby v celém programu existovala pouze jedna instance určité třídy. Návrhový vzor také poskytne globální přístupový bod k instanci. 
+        ```Java
+        public class Singleton {
+
+            private static final Singleton instance = new Singleton();
+
+            private Singleton() {
+            }
+
+            public static Singleton getInstance() {
+                return instance;
+            }
+
+            // Použití je stejné
+            public static void main(String[] args) {
+                Singleton objekt = Singleton.getInstance();
+            }
+        }
+        ```
+2. **Strukturální vzory (Structural Patterns)**:
+   - Řeší problémy týkající se kompozice tříd a objektů.
+   - Příklady: Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy.
+   - <u>Adapter:</u> Adaptér je konstrukční vzor, který umožňuje spolupráci objektů s nekompatibilními rozhraními. Jedná se o speciální objekt, který převádí rozhraní jednoho objektu tak, aby mu jiný objekt rozuměl.
+    ![adapter](adapter.png)
+    - <u>Facade:</u> Fasáda je strukturální návrhový vzor, který poskytuje zjednodušené rozhraní ke knihovně, frameworku nebo jiné složité sadě tříd.
+    ![facade](facade.png)
+    - <u>Proxy:</u> Proxy je konstrukční vzor, který umožňuje poskytnout náhradu nebo zástupný objekt za jiný objekt. Zástupce řídí přístup k původnímu objektu a umožňuje provést něco předtím, než se požadavek dostane k původnímu objektu, nebo poté, co se k němu dostane.
+    ![proxy](proxy.png)
+3. **Vzory chování (Behavioral Patterns)**:
+   - Řeší problémy interakce mezi objekty a způsoby, jakými spolupracují.
+   - Příklady: Chain of Responsibility, Command, Interpreter, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor.
+   - <u>Observer:</u> Observer je návrhový vzor chování, který umožňuje definovat mechanismus odběru pro upozornění více objektů na všechny události, které se stanou s objektem, který pozorují.
+   ![subscriber](subscriber.png)
+   - <u>Iterator:</u> Iterátor je návrhový vzor chování, který umožňuje procházet prvky kolekce, aniž by byla odhalena její základní reprezentace (seznam, zásobník, strom atd.). Hlavní myšlenkou vzoru Iterátor je extrahovat chování procházení kolekce do samostatného objektu zvaného iterátor.
+    ![iterator](iterator.png)
+
+### Důležitost znalosti návrhových vzorů:
+
+1. **Zlepšení kvality kódu**:
+   - Návrhové vzory poskytují osvědčené řešení, která zvyšují kvalitu kódu.
+2. **Zvýšení efektivity vývoje**:
+   - Použitím návrhových vzorů lze urychlit vývoj a snížit chybovost.
+3. **Usnadnění komunikace mezi vývojáři**:
+   - Návrhové vzory slouží jako společný jazyk, který usnadňuje komunikaci a porozumění mezi vývojáři.
+4. **Zjednodušení údržby**:
+   - Návrhové vzory usnadňují údržbu a rozšiřování kódu díky jejich známé struktuře a principům.
+5. **Podpora znovupoužitelnosti**:
+   - Návrhové vzory podporují znovupoužitelnost kódu tím, že umožňují snadnější integraci a adaptaci kódu.
+
+### Existují návrhové antivzory (design antipatterns)?
+
+- Ano, návrhové antivzory existují.
+- Jsou to **špatné řešení** nebo **protipříklady** dobrých návrhových vzorů.
+- Návrhové antivzory mohou vést ke **špatně navrženému**, **těžko udržitelnému** a **neefektivnímu** kódu.
+- Je důležité rozpoznat a vyhýbat se návrhovým antivzorům, aby byla zajištěna dobrá kvalita kódu a efektivní vývoj.
