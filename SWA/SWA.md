@@ -312,3 +312,184 @@ Tento architektonický styl je vhodný pro mnoho webových aplikací, zejména t
 - Je důležité rozpoznat a vyhýbat se návrhovým antivzorům, aby byla zajištěna dobrá kvalita kódu a efektivní vývoj.
 - God Object/Megaservice: Objekt/mikroslužba, který kontroluje mnoho různých částí systému a má příliš mnoho zodpovědností.
 - Golden Hammer: Používání stejného známého nástroje nebo technologie pro všechny problémy bez ohledu na jejich specifika, což může vést k nevhodným řešením.
+
+## What is a microservice architecture? What are its advantages and disadvantages compared to a monolithic architecture. How is microservices development different from developing a monolithic application? Are there any methodologies or guidelines or best practices to follow when developing microservices? Obviously, there are patterns that can be applied in this area, are there any antipatterns that should be avoided?
+
+### Co je mikroservisní architektura?
+
+- Mikroservisní architektura je **přístup k vývoji softwaru**, který rozděluje aplikaci na **malé, nezávislé služby**.
+- Tyto služby komunikují pomocí **lehkých protokolů** (např. REST nebo gRPC) a mají vlastní **databáze** a **konfigurace**.
+  
+### Výhody:
+
+1. **Lehká škálovatelnost**:
+   - Mikroservisy lze škálovat nezávisle na ostatních službách.
+2. **Snadnější údržba**:
+   - Menší a jednodušší kódová základna usnadňuje údržbu a rozšiřování.
+3. **Rychlejší nasazení**:
+   - Mikroservisy lze nasazovat nezávisle, což urychluje vývojový cyklus.
+4. **Technologická agilita**:
+   - Každá služba může používat jiné technologie, což umožňuje snadnější inovace.
+5. **Odolnost vůči chybám**:
+   - Selhání jedné služby má menší dopad na celý systém.
+
+### Nevýhody:
+
+1. **Složitost**:
+   - Větší počet komponent a interakcí mezi nimi zvyšuje složitost systému.
+2. **Výkon**:
+   - Komunikace mezi službami může být pomalejší než u monolitické architektury.
+3. **Správa a monitorování**:
+   - Správa a sledování mnoha nezávislých služeb může být náročné.
+4. **Distribuované transakce**:
+   - Řešení distribuovaných transakcí může být komplikovanější než v monolitických aplikacích.
+
+### Jak se vývoj mikroservisů liší od vývoje monolitické aplikace?
+
+1. **Rozdělení aplikace**:
+   - Aplikace je rozdělena na menší, nezávislé služby.
+2. **Komunikace mezi službami**:
+   - Mikroservisy komunikují pomocí API a lehkých protokolů.
+3. **Databáze a konfigurace**:
+   - Každá služba má vlastní databázi a konfiguraci.
+4. **Nezávislé nasazení**:
+   - Mikroservisy mohou být nasazeny a škálovány nezávisle.
+5. **Technologická diverzita**:
+   - Každá služba může používat jiné technologie, což umožňuje snadnější inovace.
+6. **Správa a monitorování**:
+   - Vyžaduje nástroje a postupy pro správu a sledování mnoha nezávislých služeb.
+7. **Distribuované transakce**:
+   - Řešení distribuovaných transakcí může být komplikovanější než v monolitických aplikacích.
+
+## Metodiky, nápady a osvědčené postupy pro vývoj mikroservisů:
+
+1. **Rozdělit a vládnout**:
+   - Aplikaci rozdělit na menší, nezávislé a snadno řiditelné služby.
+2. **Definice rozhraní (API)**:
+   - Navrhnout jasná a stabilní API pro komunikaci mezi službami.
+3. **Oddělení zájmů**:
+   - Každá služba by měla mít jednu zodpovědnost a řešit jeden aspekt byznysu.
+4. **Decentralizace správy dat**:
+   - Každá služba by měla mít svou vlastní databázi a spravovat svá data nezávisle.
+5. **Stavová nezávislost**:
+   - Preferovat bezestavové služby, které neuchovávají stav mezi požadavky.
+6. **Automatizace nasazení a škálování**:
+   - Používat nástroje a postupy pro automatické nasazení a škálování služeb.
+7. **Monitorování a sledování**:
+   - Implementovat monitorování, sledování a protokolování pro snadnou detekci a řešení problémů.
+8. **Resilience a tolerování selhání**:
+   - Navrhnout služby tak, aby byly schopny zotavit se z chyb a pokračovat v provozu.
+9. **Bezpečnost**:
+   - Zabezpečit komunikaci mezi službami a chránit citlivá data.
+10. **Kontejnerizace a orchestrace**:
+    - Používat kontejnery (např. Docker) a orchestrátory (např. Kubernetes) pro snadnou správu a škálování.
+
+### Antivzory, kterým by se mělo vyhnout při vývoji mikroservisů:
+
+1. **Nedostatečné rozdělení služeb**:
+   - Příliš velké nebo příliš malé služby mohou vést k problémům se škálovatelností a údržbou.
+2. **Nadbytečná komunikace mezi službami**:
+   - Příliš mnoho vzájemné komunikace mezi službami může vést k problémům s výkonem a složitosti.
+3. **Centrální správa dat**:
+   - Spoléhání na jednu centrální databázi pro všechny služby může vést k problémům se škálovatelností a nezávislostí služeb.
+4. **Synchronní komunikace**:
+   - Nadměrné použití synchronní komunikace může způsobit výkonnostní problémy a závislost mezi službami.
+5. **Nedostatečné monitorování a sledování**:
+   - Absence monitorování a sledování může ztížit detekci a řešení problémů.
+6. **Nedostatečná bezpečnost**:
+   - Nedostatek zabezpečení mezi službami nebo nedbalost při ochraně dat může vést k zranitelnostem.
+7. **Vývoj monolitu v mikroservisách**:
+   - Přístup k vývoji mikroservisů, který zachovává špatné návyky z monolitického vývoje, může způsobit výkonnostní a údržbové problémy.
+8. **Nedostatečná automatizace nasazení a škálování**:
+   - Ruční nasazení a škálování služeb může vést k chybám a zpomalit vývoj.
+9. **Zanedbávání kontejnerizace a orchestrace**:
+   - Neužívání kontejnerů a orchestrátorů může ztížit správu a škálování mikroservisů.
+10. **Nedostatečná dokumentace a komunikace**:
+    - Špatně zdokumentované nebo nekomunikované změny mohou vést k nedorozuměním a chybám mezi týmy.
+
+## Software architects can choose one architecture over another. The choice may affect the quality of the final product. Can you tell if one architecture is better than another or if one architecture is bad while the other is not? How can you measure the quality of an architecture? Can you measure the quality from different perspectives?
+
+### Výběr softwarové architektury
+
+Při výběru softwarové architektury je těžké říci, že jedna architektura je obecně lepší než druhá, protože jejich vhodnost závisí na konkrétních požadavcích a omezeních projektu. Při výběru architektury je důležité zvážit následující faktory:
+
+1. **Požadavky na výkon**:
+   - Některé architektury mohou lépe podporovat vysoký výkon než jiné, například distribuované systémy pro škálování.
+
+2. **Škálovatelnost**:
+   - Zvolená architektura by měla umožňovat snadné škálování a rozšiřování aplikace, aby bylo možné lépe řešit růst zátěže.
+
+3. **Flexibilita a rozšiřitelnost**:
+   - Architektura by měla umožňovat snadné přidávání nových funkcí a integraci s dalšími systémy.
+
+4. **Bezpečnost**:
+   - Důležité je zvážit, jak dobře architektura řeší bezpečnostní hrozby a zabezpečuje citlivá data.
+
+5. **Údržba a evoluce**:
+   - Architektura by měla usnadňovat údržbu a umožňovat snadnou adaptaci na změny v požadavcích nebo technologiích.
+
+6. **Náklady a zdroje**:
+   - Je třeba zohlednit dostupné zdroje, jako je čas, rozpočet a lidské zdroje, a zvážit náklady na vývoj, provoz a údržbu.
+
+7. **Kompatibilita s technologiemi**:
+   - Zvolená architektura by měla být kompatibilní s technologiemi, které tým již používá, nebo které plánuje použít.
+
+8. **Týmová zkušenost a dovednosti**:
+   - Je důležité zvážit zkušenosti a dovednosti týmu a jak dobře se dokážou vyrovnat s nároky zvolené architektury.
+
+### Měření kvality architektury:
+
+Kvalitu softwarové architektury lze měřit pomocí několika metrik a z různých perspektiv. Některé z těchto perspektiv zahrnují:
+
+1. **Výkon**:
+   - Měření, jak rychle a efektivně architektura zvládá požadavky, např. doba odezvy, průchodnost a latence.
+   
+2. **Škálovatelnost**:
+   - Hodnocení, jak snadno může architektura růst, aby vyhověla rostoucím požadavkům, a jak dobře se přizpůsobuje změnám v zátěži.
+
+3. **Flexibilita a rozšiřitelnost**:
+   - Určení, jak snadno může být architektura rozšířena nebo upravena pro nové funkce nebo integraci s dalšími systémy.
+
+4. **Bezpečnost**:
+   - Hodnocení, jak dobře architektura zabezpečuje citlivá data a chrání před bezpečnostními hrozbami.
+
+5. **Spolehlivost a odolnost**:
+   - Měření, jak dobře architektura zvládá selhání a chyby, a jak rychle se dokáže zotavit.
+
+6. **Údržba a evoluce**:
+   - Hodnocení, jak snadno může být architektura udržována a aktualizována, aby vyhovovala změnám v požadavcích a technologiích.
+
+7. **Modularita a oddělení zájmů**:
+   - Určení, jak dobře je architektura rozdělena do samostatných, snadno spravovatelných a znovupoužitelných komponent.
+
+8. **Testovatelnost**:
+   - Hodnocení, jak snadno lze architekturu testovat a validovat pro zajištění kvality a spolehlivosti.
+
+
+#### Analýza a hodnocení architektury
+
+- Je důležité vědět, jak vyhodnotit návrh, aby se zjistilo, zda odpovídá zájmům nebo požadavkům všech zúčastněných stran.
+- K měření atributů kvality lze použít scénáře atributů kvality, které určí, zda je systém schopen splnit požadavky stanovené pro daný atribut.
+- Existují dva druhy scénářů:
+    - Obecný scénář, který se používá k charakterizaci jakéhokoli systému.
+    - Konkrétní scénář, který se používá k charakterizaci konkrétního systému.
+
+#### Hodnocení atributů kvality
+
+Atributy kvality lze hodnotit prostřednictvím:
+
+- **Hodnocení na základě scénáře:** například změna scénáře pro hodnocení udržovatelnosti
+- **Simulace:** například prototypování je formou simulace, kdy je část architektury implementována a provedena v kontextu skutečného systému.
+- **Matematické modelování:** například kontrola pro potenciálních slepých uliček.
+- **Posuzování na základě zkušeností:** vychází ze subjektivních faktorů, jako je intuice a odborné znalosti softwaru.
+- 
+Obecné i konkrétní scénáře mají:
+
+- **Zdroj podnětu**, což je cokoliv, co vytváří podnět. Může být interní nebo externí vůči systému.
+- **Podnět** je podmínka, která způsobí, že systém zareaguje. Zdroj podmínky může vzniknout interně nebo externě, bude třeba rozlišovat typy podmínek.
+- **Prostředí** je režim systému, když přijímá podnět. Jedná se o důležitý aspekt, zejména pokud systém zahrnuje distribuované výpočty nebo pokud může existovat i v jiných provozních režimech než jen v režimu spuštění a zastavení, jako je například zotavování se z poruchy.
+- **Artefakt** je část systému, která je podnětem ovlivněna. V rozsáhlých systémech by měl podnět přímo ovlivnit celý systém.
+- **Reakce** je to, jak se artefakt zachová v důsledku přijetí podnětu. Tato odezva může zahrnovat zpracování chyby, zotavení z poruchy, aktualizace systémových protokolů, odeslání bezpečnostních výstrah nebo změna systému. aktuálního prostředí.
+- **Míra odezvy** je metrika používaná ke kvantifikaci odezvy, aby bylo možné měřit atribut kvality. Tato metrika by měla být kvantitativní a objektivní, například pravděpodobnost selhání, doba odezvy, doba opravy, a průměrné zatížení systému.
+
+![scenarios](scenarios.png)
