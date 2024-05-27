@@ -464,6 +464,7 @@ Reálný příklad
   ![cicd](cicd.png)
 
 - **Testovací pyramida**
+    
     ![test-pyramid](test-pyramid.png)
 
 - **Tets doubles** - Test double je objekt, který může v testu zastoupit skutečný objekt, jako když se postaví kaskadérský dvojník pro herce ve filmu. Test double je objekt, který při testu používáme místo skutečného objektu.
