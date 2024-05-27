@@ -189,3 +189,186 @@ Boehmův zákon : cena opravy chyby roste!
   - MBT generuje testovací případy
   - Automatické testování provádí tyto testovací případy
   - Tím se zvyšuje efektivita, rychlost a přesnost testování
+
+## Outline the main test automation principle and economics. What are possible levels at which tests can be automated? Give some examples of main approaches and technologies that can be used in software test automation.
+
+### Principy automatizace testování:
+- Snížení lidského úsilí při provádění testů
+- Zvýšení rychlosti a přesnosti testování
+- Systematický a konzistentní přístup k testování
+- Snížení rizika lidských chyb
+- Možnost častějšího a průběžného testování
+- eliminace duplikátů
+
+### Ekonomika automatizace testování:
+- Vyšší počáteční náklady na nástroje a přípravu testů
+- Nižší náklady na provádění testů dlouhodobě
+- Snížení nákladů na opravy chyb díky dřívějšímu odhalení
+- Rychlejší nasazení a aktualizace softwaru
+
+Ve chvíli, kdy se SUT nemění, se úsilí vynaložené v rámci přípravy automatizovaných testů může rychle vrátit. 
+
+![Price static model](price-static-model.png)
+
+Reálně se ale SUT mění, a tak se může stát, že se automatizované testování prodraží, neboť musíme v případě změn do testů zasahovat, což zvyšuje nákladnost. Graf níže poukazuje na fakt, že se nám automatické testování může vyplatit až po hodně dlouhé době.
+
+![alt text](price-dynamic-model.png)
+
+
+### Úrovně automatizace testů:
+
+1. **Jednotkové testy (Unit tests)**:
+   - Automatické testování jednotlivých funkcí nebo tříd
+   - Zajišťují, že jednotlivé komponenty fungují správně
+
+2. **Integrační testy (Integration tests)**:
+   - Automatické testování interakce mezi komponentami nebo systémy
+   - Ověřují, že celý systém funguje správně jako celek
+
+3. **Systémové testy (System tests)**:
+   - Automatické testování celého systému nebo aplikace
+   - Kontrolují, zda systém splňuje požadavky a očekávání uživatelů
+
+4. **Uživatelské akceptační testy (User Acceptance tests, UAT)**:
+   - Částečně automatizované testování z pohledu uživatele a jeho zkušeností
+   - Ověřují, že aplikace je připravena k nasazení a použití
+
+5. **Regresní testy (Regression tests)**:
+   - Automatické testování zaměřené na odhalení chyb po změnách v kódu
+   - Kontrolují, že nové změny nezpůsobily problémy v již otestovaných částech
+
+test automation pyramid
+
+![test automation pyramid](pyramid.png)
+
+W model 
+
+![w](w.png)
+
+### Příklady hlavních přístupů a technologií používaných v automatizaci testování softwaru:
+
+1. Nástroje pro jednotkové testování (Unit testing tools):
+   - JUnit (pro Java)
+   - NUnit (pro .NET)
+   - Mocha (pro JavaScript)
+   - Pytest (pro Python)
+   - Pomáhají vytvářet a provádět jednotkové testy pro jednotlivé komponenty
+
+2. Nástroje pro integrační a systémové testování (Integration and system testing tools):
+   - Selenium (pro webové aplikace)
+   - Appium (pro mobilní aplikace)
+   - JMeter (pro testování výkonnosti)
+   - SoapUI (pro testování webových služeb)
+   - Umožňují automatizaci testů na úrovni celého systému nebo aplikace
+
+3. Rámce pro Behavior-Driven Development (BDD):
+   - Cucumber (pro Ruby, Java, .NET)
+   - SpecFlow (pro .NET)
+   - Behave (pro Python)
+   - Pomáhají vytvářet testy založené na chování systému a propojení s požadavky
+
+4. Nástroje pro kontinuální integraci (Continuous Integration, CI) a kontinuální nasazení (Continuous Deployment, CD):
+   - Jenkins
+   - GitLab CI/CD
+   - Bamboo
+   - CircleCI
+   - Travis CI
+   - Umožňují automatizovat provádění testů a nasazení aplikace v průběhu vývoje
+
+5. Testovací nástroje pro vizuální porovnávání (Visual testing tools):
+   - Applitools
+   - Percy
+   - Galen Framework
+   - Porovnávají vizuální vzhled aplikace napříč různými prohlížeči, platformami a obrazovkami
+   - Cypress
+
+6. Nástroje pro nahrávání a přehrávání testů (Record and playback tools):
+   - Selenium IDE
+   - Katalon Studio
+   - Umožňují nahrát testovací scénáře při manuálním provádění testu a poté je automaticky přehrát
+
+## Explain the equivalence class and boundary values concepts and principle of the Combinatorial Interaction Testing. What is a combinatorial explosion effect, how to effectively reduce the input data combinations? Principle of pairwise (2-way) and N-way testing.
+
+### Ekvivalentní třída (Equivalence Class):
+- Koncept založený na rozdělení vstupních hodnot do skupin, které vykazují podobné chování
+- Každá skupina se nazývá ekvivalentní třída
+- Testování se provádí na základě reprezentativního vzorku hodnot z každé třídy
+- Účinně snižuje počet testovacích případů, aniž by se snížila účinnost testování
+
+![ec](ec.png)
+
+rozdělím je z více pohledů
+
+![ec types](ec-types.png)
+
+### Hraniční hodnoty (Boundary Values):
+- Koncept zaměřený na testování hodnot na hranicích ekvivalentních tříd
+- Hraniční hodnoty často zahrnují:
+  - Minimální a maximální hodnoty
+  - Hodnoty těsně nad a pod minimálními a maximálními hodnotami (spojité musím diskretizovat)
+- Testování hraničních hodnot je založeno na pozorování, že chyby se často vyskytují u hranic ekvivalentních tříd
+
+
+### Kombinatorické interakční testování (Combinatorial Interaction Testing):
+- Princip spočívá v testování všech možných kombinací dvou nebo více proměnných
+- Zaměřuje se na odhalování chyb způsobených nečekanými interakcemi mezi proměnnými
+- Kombinatorické testování může být prováděno pomocí různých technik, jako je:
+  - Pairwise testing (testování všech možných dvojic proměnných)
+  - Orthogonal arrays (testování s omezeným počtem kombinací, které zahrnují všechny možné interakce)
+- Účinně snižuje počet testovacích případů, aniž by se snížila účinnost testování
+
+### Kombinatorický výbuch (Combinatorial Explosion):
+- Efekt, kdy počet kombinací vstupních dat rychle roste s přibývajícím počtem proměnných nebo hodnot
+- Výsledkem je velký počet testovacích případů, což zvyšuje nároky na čas a zdroje při testování
+
+### Jak efektivně snížit kombinace vstupních dat:
+
+1. **Pairwise testing (dvojice testů)**:
+   - Testování všech možných dvojic proměnných místo všech kombinací
+   - Značně snižuje počet testovacích případů, aniž by se značně snížila účinnost testování
+
+2. **Orthogonal Arrays (ortogonální pole)**:
+   - Testování s omezeným počtem kombinací, které zahrnují všechny možné interakce mezi proměnnými
+   - Pomáhá snížit počet testovacích případů, zatímco zachovává dobré pokrytí interakcí
+
+3. **Testování založené na prioritách**:
+   - Prioritizace testovacích případů na základě rizik a pravděpodobnosti chyb
+   - Provedení testů s vyšší prioritou a omezení testů s nižší prioritou
+
+4. **Ekvivalentní třídy (Equivalence Classes) a hraniční hodnoty (Boundary Values)**:
+   - Rozdělení vstupních hodnot do ekvivalentních tříd a testování na základě reprezentativního vzorku
+   - Testování hraničních hodnot, které se zaměřuje na hodnoty na hranicích tříd
+
+5. **Model-Based Testing (MBT)**:
+   - Vytvoření matematického nebo formálního modelu systému a generování testovacích případů z tohoto modelu
+   - Pomáhá snížit počet testovacích případů a současně zvyšuje účinnost testování
+
+6. **Podmínky**:
+    - testovat např IE prohlížeč s macOS nemá cenu
+
+
+### Pairwise (2-way) testing:
+
+- Pairwise testing je technika kombinatorického testování, která zkoumá interakce mezi dvojicemi proměnných
+- Místo testování všech možných kombinací proměnných se zaměřuje na testování všech dvojic proměnných
+- Vychází z předpokladu, že většina chyb je způsobena interakcemi mezi jednotlivými páry proměnných
+- Pairwise testing značně snižuje počet testovacích případů, aniž by se značně snížila účinnost testování
+- Nástroje, jako jsou AllPairs, PICT nebo Hexawise, mohou být použity pro generování pairwise testovacích případů
+
+![pairwise](pairwise.png)
+
+pro každou pozici 1-2, 1-3, 2-5, ... zkusíme všechny kombinace
+
+Dvoucestné (pairwise) testování zahrnuje všechny možné páry parametrů, co se v systému vyskytují. V případě N-cestného jde o všechny možné N-tice. 
+
+**Proč funguje** Statisticky se ukázalo, že pairwise odhalí drtivou většinu chyb
+
+Složitý vymyslet z hlavy, bude na to potřeba nějaký software
+
+### N-way testing:
+
+- N-way testing je rozšířením pairwise testingu, které zkoumá interakce mezi N proměnnými
+- Pro N > 2 se zvyšuje pokrytí interakcí mezi proměnnými, ale roste také počet testovacích případů
+- N-way testing může být užitečné pro systémy s vyšší mírou komplexnosti nebo vyšším rizikem chyb způsobených interakcemi mezi více proměnnými
+- Volba hodnoty N závisí na rovnováze mezi potřebou pokrytí interakcí a omezením počtu testovacích případů
+- Nástroje, jako jsou AllPairs, PICT nebo Hexawise, mohou být také použity pro generování N-way testovacích případů s různými hodnotami
