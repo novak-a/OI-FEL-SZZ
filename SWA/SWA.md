@@ -310,3 +310,5 @@ Tento architektonický styl je vhodný pro mnoho webových aplikací, zejména t
 - Jsou to **špatné řešení** nebo **protipříklady** dobrých návrhových vzorů.
 - Návrhové antivzory mohou vést ke **špatně navrženému**, **těžko udržitelnému** a **neefektivnímu** kódu.
 - Je důležité rozpoznat a vyhýbat se návrhovým antivzorům, aby byla zajištěna dobrá kvalita kódu a efektivní vývoj.
+- God Object/Megaservice: Objekt/mikroslužba, který kontroluje mnoho různých částí systému a má příliš mnoho zodpovědností.
+- Golden Hammer: Používání stejného známého nástroje nebo technologie pro všechny problémy bez ohledu na jejich specifika, což může vést k nevhodným řešením.
