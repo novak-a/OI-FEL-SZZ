@@ -121,3 +121,118 @@ Máme 14 různých UML diagramů rozdělených do dvou skupin.
 - **Vývojový pohled (Development View):**
     - Balíčkový diagram (Package Diagram)
     - Diagram komponent (Component Diagram)
+
+## What is a software architecture? Describe the importance of software architecture when developing a system. What are the software architecture design guidelines? What are the architectural styles? Give an example of an architectural style and describe it in detail.
+
+### Co je softwarová architektura?
+
+Softwarová architektura je struktura komponent programu/systému, jejich vzájemné vazby, principy a předpisy určující jejich návrh a vývoj v průběhu času.
+
+### Důležitost softwarové architektury při vývoji systému:
+
+1. **Zajištění kvality**:
+   - Architektura zajišťuje, že systém splňuje **funkční** a **nefunkční** požadavky.
+2. **Usnadnění komunikace**:
+   - Architektura slouží jako **společný jazyk** pro vývojáře, zákazníky a další zúčastněné strany.
+3. **Podpora znovupoužitelnosti**:
+   - Správně navržená architektura umožňuje **znovupoužití** kódu a komponent.
+4. **Zjednodušení rozhodování**:
+   - Architektura poskytuje **rámcové rozhodnutí** pro vývojáře, které usnadňuje vývoj a údržbu.
+5. **Řízení rizik**:
+   - Architektura pomáhá identifikovat a řešit **rizika** spojená s vývojem systému.
+6. **Zlepšení výkonnosti**:
+   - Architektura optimalizuje **výkonnost**, **škálovatelnost** a **stabilitu** systému.
+
+### Zásady pro návrh softwarové architektury:
+
+1. **Rozděl a panuj**:
+   - Systém rozdělit na menší, snadno řiditelné komponenty.
+2. **Abstrakce**:
+   - Použít abstrakce pro zjednodušení složitých problémů.
+3. **Modularita**:
+   - Navrhnout nezávislé a snadno zaměnitelné moduly.
+4. **Závislosti**:
+   - Minimalizovat závislosti mezi komponentami.
+5. **Škálovatelnost**:
+   - Umožnit snadné rozšíření systému.
+6. **Znovupoužitelnost**:
+   - Navrhovat komponenty tak, aby byly znovupoužitelné.
+7. **Flexibilita**:
+   - Umožnit snadnou údržbu a přizpůsobení změnám požadavků.
+
+### Architektonické styly:
+
+Architektonické styly jsou **vzory** nebo **paradigmata** pro návrh softwarové architektury.
+
+- **Monolitické**
+
+    - **Vrstvená (layered)** – typická pro webové aplikace. Aplikace je rozdělena na vrstvy, které spolu komunikují (např. prezentační, servisní, datová). Vrstvy zapouzdřují určité chování a zajišťují vysokou kohezi.
+
+    - **Mikrojádro (microkernel)** – naprogramuje se tzv. jádro aplikace, do kterého je následně možné přidávat pluginy, které rozšiřují funkcionalitu. Např. dnešní IDEčka jako IDEA.
+
+    - **Roury a filtry (pipes and filters)** – systém je rozdělen na řetězec komponent, z nichž každá zprocesuje data pošle je do další komponenty. Typické jsou UNIXové roury.
+
+![Monolitické styly](monolithic-styles.png)
+
+- **Distribuované**
+  
+    - **Service-based architecture** - Distribuované služby s hrubým členěním si navzájem poskytují funkce; Sdílené uživatelské rozhraní; Sdílená databáze (logické rozdělení); Flexibilní, řízené doménou
+    ![Service-based architecture](Service-based-arch.png)
+
+    - **Orchestrated service-oriented architecture** - Centrální orchestrační engine se stará o koordinaci procesů; Do orchestračního enginu lze přidat vlastní kód; Sběrnice Enterprise Service Bus - poskytovaná společnostmi Oracle, IBM atd.
+    ![Orchestrated service-oriented architecture](orchestrated-service.png)
+
+    - **Event-driven architecture** - Asynchronní komponenty zpracovávající a vysílající události; Asynchronní zprávy mezi klienty; Topologie: Broker - fronta zpráv brokera / Mediátor - centrální mediátor distribuující události; Problematické zpracování chyb, nedeterministický stav procesu
+  
+    - **Microservices**
+
+### Uveďte příklad architektonického stylu a podrobně ho popište.
+
+Typické pro webové aplikace, která se skládá po vrstvách. Například:
+
+![Layered](layered.png)
+
+Vrstvený architektonický styl (layered architecture) je běžně používaný přístup při návrhu webových aplikací, který rozděluje aplikaci do oddělených vrstev s jasně definovanými rolemi a odpovědnostmi. Tento přístup zvyšuje modularitu, usnadňuje údržbu a testování aplikace. Typicky se vrstvená architektura skládá z těchto vrstev:
+
+#### 1. Prezentační vrstva (Presentation Layer)
+- **Účel:** Interakce s uživatelem
+- **Komponenty:** HTML, CSS, JavaScript, front-end frameworky (např. React, Angular, Vue.js)
+- **Funkce:** Zobrazuje data uživatelům a zpracovává uživatelské vstupy. Posílá požadavky na aplikační vrstvu a zobrazuje výsledky.
+
+#### 2. Aplikační vrstva (Application Layer)
+- **Účel:** Logika aplikace
+- **Komponenty:** Back-end frameworky (např. Spring, ASP.NET, Django, Express.js)
+- **Funkce:** Zpracovává požadavky z prezentační vrstvy, aplikuje podniková pravidla, koordinuje tok dat mezi prezentační a datovou vrstvou.
+
+#### 3. Servisní vrstva (Service Layer)
+- **Účel:** Poskytování služeb
+- **Komponenty:** REST API, SOAP, GraphQL
+- **Funkce:** Nabízí rozhraní pro aplikační logiku, umožňuje komunikaci mezi aplikační vrstvou a dalšími službami nebo systémy. V některých případech je součástí aplikační vrstvy.
+
+#### 4. Datová vrstva (Data Layer)
+- **Účel:** Přístup a manipulace s daty
+- **Komponenty:** Databáze (SQL - MySQL, PostgreSQL; NoSQL - MongoDB, Cassandra), ORM (Object-Relational Mapping) nástroje (např. Hibernate, Entity Framework)
+- **Funkce:** Spravuje přístup k databázím, zajišťuje uložení, načítání a manipulaci s daty. 
+
+#### 5. Integrace a middleware (Integration and Middleware)
+- **Účel:** Zprostředkování komunikace mezi různými částmi systému
+- **Komponenty:** Message brokers (např. RabbitMQ, Kafka), middleware
+- **Funkce:** Usnadňuje integraci a komunikaci mezi aplikační vrstvou a externími systémy, služby jako autentizace, logování, cache.
+
+#### Přehled toku dat
+1. **Prezentační vrstva** získá vstup od uživatele a posílá požadavek na aplikační vrstvu.
+2. **Aplikační vrstva** zpracuje požadavek, případně využije **servisní vrstvu** k přístupu k externím službám.
+3. **Aplikační vrstva** komunikuje s **datovou vrstvou** pro načtení nebo uložení potřebných dat.
+4. **Datová vrstva** vrátí data aplikační vrstvě, která aplikuje podniková pravidla a připraví data pro zobrazení.
+5. **Prezentační vrstva** obdrží data z aplikační vrstvy a zobrazí je uživateli.
+
+#### Výhody vrstvené architektury
+- **Modularita:** Každá vrstva má jasně definovanou roli, což usnadňuje vývoj, údržbu a testování.
+- **Flexibilita:** Změny v jedné vrstvě obvykle nevyžadují změny v ostatních vrstvách.
+- **Opětovná použitelnost:** Komponenty a služby v jednotlivých vrstvách mohou být znovu použity v různých částech aplikace.
+
+#### Nevýhody vrstvené architektury
+- **Výkon:** Více vrstev může znamenat více overheadu při komunikaci mezi vrstvami.
+- **Komplexita:** Přidání více vrstev může zvýšit komplexitu návrhu a implementace.
+
+Tento architektonický styl je vhodný pro mnoho webových aplikací, zejména ty, které vyžadují jasné oddělení logiky a prezentace, snadnou údržbu a rozšiřitelnost.
