@@ -372,3 +372,98 @@ Složitý vymyslet z hlavy, bude na to potřeba nějaký software
 - N-way testing může být užitečné pro systémy s vyšší mírou komplexnosti nebo vyšším rizikem chyb způsobených interakcemi mezi více proměnnými
 - Volba hodnoty N závisí na rovnováze mezi potřebou pokrytí interakcí a omezením počtu testovacích případů
 - Nástroje, jako jsou AllPairs, PICT nebo Hexawise, mohou být také použity pro generování N-way testovacích případů s různými hodnotami
+
+## Principle of path-based testing. Formal deﬁnition of system model and test coverage criteria (node/edge coverage, edge-pair coverage, prime-path coverage). How prioritization of process/workﬂow activities is modelled and handled in the generation of the test cases?
+
+Testování založené na cestách je metoda testování softwaru, která navrhuje testovací případy na základě všech možných cest, které mohou být provedeny programem prostřednictvím jeho grafu řízení toku.
+
+### Formální definice modelu systému a kritéria pokrytí testů:
+
+1. Node (uzel) coverage:
+   - Požadavek, aby každý uzel v grafu byl navštíven alespoň jednou během testování
+   - Zaměřuje se na procházení všech možných stavů systému
+   - Méně náročné než ostatní kritéria pokrytí, ale méně účinné v odhalování chyb
+
+2. Edge (hrana) coverage:
+   - Požadavek, aby každá hrana v grafu byla projita alespoň jednou během testování
+   - Zaměřuje se na testování všech možných přechodů mezi uzly
+   - Přináší lepší pokrytí než node coverage, ale vyšší nároky na testovací případy
+   - TDL = 1 (Edge coverage) znamená, že pro každý vrchol testujeme všechny možné způsoby výstupů z něj:
+
+    ![edge coverage](edge-coverage.png)
+
+3. Edge-pair coverage:
+   - Požadavek, aby každá dvojice sousedních hran v grafu byla projita alespoň jednou během testování
+   - Zaměřuje se na testování všech možných sekvencí dvou přechodů mezi uzly
+   - Poskytuje ještě lepší pokrytí než edge coverage, ale s vyššími nároky na testovací případy
+   - TDL = 2 (Edge-pair coverage) znamená, že pro každý vrchol testujeme kombinaci všech způsobů, jak se do něj dostat se všemi možnými akcemi jež můžeme vykonat na výstupu.
+    
+    ![edge pair](edge-pair.png)
+
+    TDL = 3 funguje obdobně jako TDL = 2, akorát na výstupu uvažujeme všechni možné dvojice akcí.
+
+    ![edge-triple](edge-triple.png)
+
+4. Prime-path coverage:
+   - Požadavek, aby každá jedinečná, nezkrácená cesta v grafu byla projita alespoň jednou během testování
+   - Zaměřuje se na testování všech možných sledů uzlů a hran bez opakování
+   - Poskytuje nejlepší pokrytí v porovnání s ostatními kritérii, ale s nejvyššími nároky na testovací případy
+    - Jednoduchá cesta je cesta grafem, která neobsahuje dvakrát stejný vrchol.
+    - Prime path je jednoduchá cesta, která se navíc nikde nevyskytuje jakožto podcestou jiné jednoduché cesty.
+    
+
+Reálný příklad
+
+![real path example](real-path-example.png)
+
+### Prioritizace procesů/workflow aktivit při generování testovacích případů:
+
+1. Analýza rizik:
+   - Identifikace oblastí s nejvyšším rizikem chyb nebo dopadů na systém
+   - Prioritizace testování těchto oblastí s vyšším rizikem
+   - Pomáhá alokovat zdroje na nejvíce kritické části systému
+
+2. Důležitost funkcí:
+   - Určení důležitosti jednotlivých funkcí nebo workflow aktivit pro uživatele nebo systém
+   - Testování nejdůležitějších funkcí má vyšší prioritu
+   - Zajišťuje, že klíčové části systému jsou pečlivě testovány
+
+3. Frekvence použití:
+   - Identifikace často používaných funkcí nebo workflow aktivit
+   - Prioritizace testování těchto často používaných částí
+   - Alokace zdrojů na oblasti, které mají největší dopad na uživatele
+
+4. Historie chyb:
+   - Analýza předchozích chyb a identifikace oblastí, které jsou náchylnější k chybám
+   - Prioritizace testování těchto částí systému
+   - Zaměření na odhalení a opravu chyb v problémových oblastech
+
+5. Závislosti mezi komponentami:
+   - Identifikace komponent nebo workflow aktivit, které mají významné závislosti na ostatních částech systému
+   - Prioritizace testování těchto závislých částí
+   - Odhalení chyb v závislých komponentách, které by mohly ovlivnit celý systém
+
+6. Testovací techniky a kritéria pokrytí:
+   - Použití různých testovacích technik, jako jsou ekvivalentní třídy, hraniční hodnoty, kombinatorické testování nebo testování založené na cestách
+   - Určení kritérií pokrytí pro testování, jako je node coverage, edge coverage, edge-pair coverage nebo prime-path coverage
+   - Prioritizace testovacích případů na základě zvolených technik a kritérií pokrytí
+
+![Priority path](priority-path.png)
+
+### Další termíny
+
+- **MCC - Multiple Condition Coverage**: testujeme všechny možné kombinace
+- **MC/DC - Modified Condition/Decision Coverage**: testujeme všechny kombinace, které mají mít odlišný výsledek	
+  ![mcdc](mcdc.png)
+  Chceme, aby se každá proměnná objevila v každé své možné hodnotě a chceme, aby se výsledek objevil v každé své hodnotě
+- **C/DC** - Condition/Decision Coverage
+- **CC** - Condition Coverage
+- **DC** - Decision Coverage
+- **Exploratory testing** - je často popisován jako simultánní učení, návrh testu a provádění. Zaměřuje se na objevování a spoléhá na vedení jednotlivých testerů při odhalování defektů, které nelze snadno pokrýt v rámci jiných testů. Testeři volně testují appku, historie se nezaznamenává a není jisté co bylo otestováno.
+- **CI/CD**
+  ![cicd](cicd.png)
+
+- **Testovací pyramida**
+    ![test-pyramid](test-pyramid.png)
+
+- **Tets doubles** - Test double je objekt, který může v testu zastoupit skutečný objekt, jako když se postaví kaskadérský dvojník pro herce ve filmu. Test double je objekt, který při testu používáme místo skutečného objektu.
