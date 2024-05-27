@@ -129,3 +129,63 @@ Boehmův zákon : cena opravy chyby roste!
    - Manuální kontrola specifikace požadavků na systém
    - Ověření správnosti, úplnosti a srozumitelnosti požadavků
    - Hledání možných konfliktů, nejasností nebo nekonzistencí
+
+## Explain the principle of Model Based Testing (MBT) and compare its advantages and disadvantages with manual testing approach. Give some examples of models that can be employed in MBT. How does MBT relate to test automation?
+
+### Manuální testování:
+- Testování prováděné testerem
+- Tester kontroluje systém nebo aplikaci podle testovacích scénářů
+- Zahrnuje funkční, UI a uživatelský zážitek testování
+
+### Model Based Testing (MBT):
+- Testování založené na modelech
+- Vytvoření abstraktního modelu systému nebo aplikace
+- Generování testovacích případů z modelu pomocí algoritmů a nástrojů
+- Automatická tvorba a provádění testů
+
+### Výhody MBT oproti manuálnímu testování:
+- Rychlejší generování testovacích případů
+- Vyšší pokrytí testů díky systematickému přístupu
+- Minimalizace lidských chyb při tvorbě a provádění testů
+- Lehčí aktualizace testů při změnách v systému nebo požadavcích
+- Úspora času a nákladů na vývoj
+
+### Nevýhody MBT oproti manuálnímu testování:
+- Vyšší počáteční náklady na vytvoření a udržbu modelu
+- Nutnost specializovaných znalostí a nástrojů pro MBT
+- Možné omezení v modelování složitých nebo nestandardních situací
+- Menší vhodnost pro testování UI nebo uživatelského zážitku
+
+### Příklady modelů použitelných v Model Based Testing (MBT):
+
+1. Konečný automat (Finite State Machine, FSM):
+   - Model založený na stavech a přechodech mezi nimi
+   - Popisuje chování systému nebo komponenty
+   - Vhodný pro testování systémů s omezeným počtem stavů a přechodů
+
+2. Petriho síť (Petri Net):
+   - Matematický model pro popis distribuovaných systémů
+   - Zahrnuje místa, přechody a tokeny pro popis chování
+   - Použitelný pro testování paralelních nebo konkurenčních systémů
+
+3. Markovův řetězec (Markov Chain):
+   - Model náhodných procesů s konečným počtem stavů
+   - Přechody mezi stavy závisejí pouze na aktuálním stavu
+   - Užitečný pro testování systémů s pravděpodobnostními přechody
+
+4. Scénářové modely (Scenario Models):
+   - Modely popisující konkrétní případy užití nebo interakce s aplikací
+   - Vhodné pro testování funkcionality systému z pohledu uživatele
+
+5. Datové modely (Data Models):
+   - Modely zaměřené na strukturu a vztahy mezi daty v systému
+   - Použitelné pro testování datových operací, jako je ukládání, načítání a zpracování dat
+
+### Vztah MBT k automatickému testování:
+
+- MBT je způsob, jak generovat testovací scénáře a případy z modelů systému
+- Automatické testování je proces spouštění těchto testovacích případů bez lidské interakce
+- MBT a automatické testování se často používají společně:
+  - MBT generuje testovací případy
+  - Automatické testování provádí tyto testovací případy
+  - Tím se zvyšuje efektivita, rychlost a přesnost testování
