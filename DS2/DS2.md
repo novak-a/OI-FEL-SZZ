@@ -191,7 +191,6 @@ Polyglot persistence je koncept ve správě databází, který zahrnuje použit�
 
 ## MapReduce (architecture, functions, data ﬂow, execution, use cases). Hadoop (MapReduce, HDFS).
 
-
 ### MapReduce:
 - Architektura:
   - Programovací model pro paralelní a distribuované zpracování velkého množství dat
@@ -254,20 +253,20 @@ Idempotence je v matematice, zejména v abstraktní algebře, vlastnost algebrai
 ![alt text](step16.png)
 ![alt text](summary.png)
 
-## Hadoop:
+### Hadoop:
 - Open-source framework pro distribuované zpracování velkého množství dat
 - Hlavní komponenty:
   1. Hadoop MapReduce
   2. Hadoop Distributed File System (HDFS)
 
-## Hadoop MapReduce:
+### Hadoop MapReduce:
 - Implementace MapReduce modelu pro zpracování dat v Hadoopu
 - Řídí paralelní zpracování dat pomocí map a reduce funkcí
 - Podporuje škálování, odolnost vůči výpadkům a distribuci dat
 - Řeší Fault tolerance = nějaký node selže (master i slave)
 - Řeší Straggler - worker pracuje příliš dlouho, vyměním ho
 
-## HDFS - Hadoop Distributed File System:
+### HDFS - Hadoop Distributed File System:
 
 - Hlavní komponenty HDFS:
   1. NameNode
@@ -302,3 +301,67 @@ Idempotence je v matematice, zejména v abstraktní algebře, vlastnost algebrai
   4. Integraci s Hadoop MapReduce pro efektivní zpracování dat
 
 ![alt text](hadoopusecase.png)
+
+## XPath (path expressions, axes, node tests, predicates). XQuery (constructors, FLWOR, conditional, quantiﬁed and comparison expressions). SPARQL (subgraph matching, graph patterns, datasets, ﬁlters, solution modiﬁers, query forms).
+
+### XPath
+
+- XPath
+  - Cesta vyjadřuje umístění uzlů v XML dokumentu
+  - Používá se pro vyhledávání dat v XML dokumentech
+
+![alt text](xpath1.png)
+- Výrazy cesty
+  - Absolutní: Začínají od kořenového uzlu (např. `/kniha/nazev`)
+  - Relativní: Začínají od aktuálního uzlu (např. `./nazev`)
+- Osy
+  - child: Bezprostřední potomci aktuálního uzlu
+  - descendant: Všichni potomci aktuálního uzlu
+  - parent: Rodič aktuálního uzlu
+  - ancestor: Všichni předkové aktuálního uzlu
+  - sibling: Sourozenci aktuálního uzlu
+    ![alt text](xpath2.png)
+    ![alt text](xpath3.png)
+- Testy uzlů
+  - node(): Vybere všechny uzly
+  - text(): Vybere všechny textové uzly
+  - comment(): Vybere všechny komentářové uzly
+  - processing-instruction(): Vybere všechny uzly zpracovávající pokyny
+    ![alt text](xpath4.png)
+- Predikáty
+  - Umožňují filtrovat výsledky XPath výrazů
+  - Uzavírají se do hranatých závorek (např. `/kniha[nazev='Mistr a Markétka']`)
+  - Často se používají s operátory a funkcemi (např. `not()`, `and`, `or`)
+    ![alt text](xpath5.png)
+
+### XQuery
+
+- XQuery
+  - Jazyk pro dotazování a manipulaci s XML a JSON dokumenty
+  - Má vyšší výrazovou sílu než XPath
+- Konstruktory
+  - Element: `<jmeno>{obsah}</jmeno>`
+  - Atribut: `attribute jmeno {"hodnota"}`
+  - Text: `text {"obsah"}`
+  - Komentář: `comment {"komentář"}`
+  - Zpracovávací pokyn: `processing-instruction jmeno {"hodnota"}`
+  ![alt text](xquery1.png)
+- FLWOR
+  - Pro vyhledávání a transformaci dat
+  - F: For - prochází kolekcemi
+  - L: Let - přiřazuje hodnotu proměnné
+  - W: Where - podmínka pro filtrování
+  - O: Order by - řazení výsledků
+  - R: Return - vrácení výsledku
+    ![alt text](flowr1.png)
+    ![alt text](flowr2.png)
+- Podmínkové výrazy
+  - if (podmínka) then (výraz1) else (výraz2)
+    ![alt text](flowr3.png)
+- Kvantifikované výrazy
+  - every $x in (sekvence) satisfies (podmínka)
+  - some $x in (sekvence) satisfies (podmínka)
+    ![alt text](flowr4.png)
+- Porovnávací výrazy
+  - '=', '!=', '<', '>', '<=', '>='
+  - 'eq', 'ne', 'lt', 'gt', 'le', 'ge'
