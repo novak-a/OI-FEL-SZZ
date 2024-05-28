@@ -545,3 +545,163 @@ CQL neumí joiny, takže je to extrémně rychlý
 ![alt text](mongo7.png)
 ![alt text](mongo8.png)
 ![alt text](mongo9.png)
+
+## Graph data structures (adjacency matrix, adjacency list, incidence matrix). Data locality (BFS layout, bandwidth minimization problem, Cuthill-McKee algorithm). Graph partitioning (1D partitioning, 2D partitioning). Neo4j (traversal framework, traversal description, traverser). Cypher (graph matching, read, write and general clauses).
+
+## Grafové datové struktury
+
+- Grafové datové struktury
+  - Používány pro reprezentaci grafů (sítí, diagramů) v paměti počítače
+  - Základní struktury: maticová a seznamová reprezentace
+- Matice sousednosti (adjacency matrix)
+  - Čtvercová matice, která popisuje vztahy mezi vrcholy grafu
+  - V[i][j] = 1, pokud vrcholy i a j sousedí, jinak 0
+  - Pro vážené grafy: V[i][j] = váha hrany, pokud vrcholy i a j sousedí, jinak 0
+  - Výhody:
+    - Rychlé zjištění, zda mezi vrcholy existuje hrana
+    - Jednoduchá implementace
+  - Nevýhody:
+    - Nevhodné pro řídké grafy (mnoho nulových hodnot)
+    - Vyšší paměťová náročnost
+- Seznam sousednosti (adjacency list)
+  - Pole seznamů, kde každý seznam obsahuje sousedy daného vrcholu
+  - V[i] = seznam sousedních vrcholů vrcholu i
+  - Pro vážené grafy: V[i] = seznam dvojic (soused, váha hrany)
+  - Výhody:
+    - Nižší paměťová náročnost pro řídké grafy
+    - Rychlé procházení sousedů daného vrcholu
+  - Nevýhody:
+    - Pomalejší zjištění, zda mezi vrcholy existuje hrana
+    - Složitější implementace
+- Matice incidence (incidence matrix)
+  - Matice, která popisuje vztahy mezi vrcholy a hranami grafu
+  - V[i][j] = 1, pokud vrchol i je spojen s hranou j, jinak 0
+  - Pro orientované grafy: V[i][j] = -1, pokud hrana j vychází z vrcholu i; V[i][j] = 1, pokud hrana j vstupuje do vrcholu i
+  - Výhody:
+    - Jednoznačně reprezentuje orientované i neorientované grafy
+    - Umožňuje rychle zjistit, které vrcholy jsou spojeny s danou hranou
+  - Nevýhody:
+    - Vyšší paměťová náročnost než seznam sousednosti
+    - Pomalejší procházení sousedů daného vrcholu
+
+![alt text](matrix1.png)
+![alt text](matrix2.png)
+![alt text](matrix3.png)
+
+
+### Data locality
+
+- Data locality
+  - Optimalizace přístupu k datům v počítačové paměti
+  - Zlepšuje výkon a efektivitu paměti
+- BFS layout (Breadth-First Search)
+  - Uspořádání dat v paměti podle BFS procházení grafu
+  - Výhody:
+    - Zlepšuje data locality pro algoritmy založené na BFS
+    - Snížení latence při přístupu k sousedním vrcholům
+- Bandwidth minimization problem
+  - Problém minimalizace šířky pásma matice
+  - Cílem je přeuspořádat řádky a sloupce matice tak, aby neprázdné prvky byly co nejblíže hlavní diagonále
+  - Redukce šířky pásma zlepšuje data locality
+- Cuthill-McKee algoritmus
+  - Heuristický algoritmus pro řešení problému minimalizace šířky pásma
+  - Postup:
+    1. Vyberte vrchol s nejnižším stupněm jako kořen
+    2. Proveďte BFS procházení grafu od kořene
+    3. Přeuspořádejte vrcholy podle BFS pořadí
+  - Výhody:
+    - Snadno implementovatelný
+    - Zpravidla dává dobré výsledky
+  - Nevýhody:
+    - Ne vždy najde optimální řešení
+
+![alt text](locality1.png)
+![alt text](locality2.png)
+
+
+### Graph partitioning
+
+- Grafové rozdělení (Graph partitioning)
+  - Proces rozdělení grafu na menší části (partice) s cílem optimalizovat výkon
+  - Používá se při paralelizaci, distribuovaném zpracování a zefektivnění úložiště
+
+- 1D rozdělení (1D partitioning)
+  - Graf je rozdělen na partice podél jednoho rozměru (řádky nebo sloupce)
+  - Používá se např. při rozdělení matice na bloky pro paralelní zpracování
+  - Výhody:
+    - Jednoduchá implementace
+    - Snadné rozdělení zátěže mezi procesory nebo uzly
+  - Nevýhody:
+    - Může vést k nerovnoměrnému rozložení zátěže, pokud graf není rovnoměrně rozdělitelný
+    - Méně efektivní pro grafy s nerovnoměrným rozložením hran
+
+- 2D rozdělení (2D partitioning)
+  - Graf je rozdělen na partice podél dvou rozměrů (řádky a sloupce)
+  - Výhody:
+    - Lepší vyvážení zátěže než u 1D rozdělení
+    - Efektivnější pro grafy s nerovnoměrným rozložením hran
+  - Nevýhody:
+    - Složitější implementace
+    - Vyšší režie při komunikaci mezi procesory nebo uzly
+
+### Neo4j
+
+- Neo4j
+  - Grafická databáze s vysokou škálovatelností a flexibilitou
+  - Umožňuje efektivní prohledávání a manipulaci s grafy
+- Traversal framework
+  - Rámec pro průchod grafem v Neo4j
+  - Umožňuje efektivně a flexibilně procházet grafem za účelem hledání vzorů, cest a dalších struktur
+- Traversal description (Popis průchodu)
+  - Definuje, jak má být graf procházen
+  - Specifikuje:
+    - Výchozí vrcholy (start nodes)
+    - Procházení směrem (vstupní/výstupní hrany)
+    - Typy hran a vrcholů, které mají být zahrnuty
+    - Hloubka průchodu (maximální počet kroků)
+    - Evaluatory a pravidla pro zahrnutí vrcholů a hran do výsledku
+- Traverser
+  - Objekt, který provádí průchod grafem podle zadaného traversal description
+  - Vrací výsledné vrcholy a hrany, které splňují zadaná pravidla
+  - Umožňuje iterativní přístup k výsledkům průchodu
+
+![alt text](neo1.png)
+![alt text](neo2.png)
+![alt text](neo3.png)
+![alt text](neo4.png)
+
+### Cypher
+
+- Cypher
+  - Deklarativní jazyk pro práci s grafy v Neo4j
+  - Umožňuje jednoduché a efektivní dotazování a manipulaci s grafy
+- Graph matching
+  - Prohledávání grafu za účelem nalezení vzorů a struktur
+  - Používá ASCII-art notaci pro definici vzorů
+  - Např. `(a)-[:ZNÁ]->(b)` najde všechny vrcholy `a` a `b`, které jsou spojeny hranou typu "ZNÁ"
+- Read clauses (Přečíst klauzule)
+  - Klauzule pro čtení dat z grafu
+  - MATCH: Hledání vzorů v grafu
+  - WHERE: Filtrování výsledků podle zadaných podmínek
+  - RETURN: Vracení výsledků dotazu
+  - WITH: Průběžné zpracování výsledků (řazení, filtrování, aliasy)
+  - UNWIND: Rozbalení seznamů na jednotlivé prvky
+  - SKIP, LIMIT: Omezení počtu vrácených výsledků
+  - ORDER BY: Řazení výsledků podle zadaných kritérií
+- Write clauses (Zapsat klauzule)
+  - Klauzule pro zápis a manipulaci dat v grafu
+  - CREATE: Vytvoření nových vrcholů a hran
+  - MERGE: Vytvoření vrcholu nebo hrany, pokud neexistuje, jinak aktualizace
+  - SET: Nastavení vlastností vrcholů a hran
+  - DELETE: Smazání vrcholů a hran
+  - REMOVE: Odstranění vlastností nebo štítků z vrcholů
+- General clauses (Obecné klauzule)
+  - Klauzule pro řízení dotazů a nastavení
+  - USING INDEX: Vynucení použití indexu pro dotaz
+  - CALL: Volání uložených procedur a funkcí
+  - LOAD CSV: Načítání dat ze CSV souboru
+  - FOREACH: Provedení akce pro každý prvek seznamu
+
+![alt text](cypher1.png)
+![alt text](cypher2.png)
+![alt text](cypher3.png)
