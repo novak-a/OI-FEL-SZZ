@@ -401,3 +401,133 @@ Idempotence je v matematice, zejména v abstraktní algebře, vlastnost algebrai
     ![alt text](sparql4.png)
     ![alt text](sparql5.png)
     ![alt text](sparql6.png)
+
+
+## RiakKV (CRUD operations, links, link walking, convergent replicated data types, Search 2.0, vector clocks, Riak Ring, replica placement strategy). Redis (data types, operations, TTL). Cassandra (keyspaces, column families, CRUD operations). MongoDB (CRUD operations,update and query operators, projection, modiﬁers).
+
+### RiakKV 
+
+- RiakKV
+  - Distribuovaný **klíč-hodnota** úložiště
+  - Navržený pro vysokou dostupnost a škálovatelnost
+- CRUD operace
+  - Create: Vytvoření hodnoty s klíčem
+  - Read: Čtení hodnoty podle klíče
+  - Update: Aktualizace hodnoty s klíčem
+  - Delete: Smazání hodnoty s klíčem
+- Odkazy (links)
+  - Reprezentují vztahy mezi objekty v RiakKV
+  - Umožňují navigaci mezi objekty
+- Procházení odkazů (link walking)
+  - Prohledávání objektů v RiakKV pomocí odkazů
+  - Zahrnuje kroky ve formátu "kbelík,tag,řetězec"
+- Konvergentní replikované datové typy (CRDT)
+  - Umožňují konzistentní replikaci dat v distribuovaném systému
+  - Zahrnuje: množiny, mapy, flagy, registry a čítače
+- Search 2.0
+  - Full-textové vyhledávání v RiakKV
+  - Založeno na Apache Solr
+- Vektorové hodiny (vector clocks)
+  - Algoritmus pro řešení konfliktů v distribuovaném systému
+  - Sleduje verze objektů a řeší konflikty
+- Riak Ring
+  - Struktura pro rozdělení dat v RiakKV
+  - Zajišťuje škálovatelnost a toleranci selhání
+- Strategie umístění replik (replica placement strategy)
+  - Určuje, jak a kde jsou repliky uloženy v RiakKV
+  - Zahrnuje: uniformní, zónování a vlastní strategie
+
+![alt text](riak1.png)
+![alt text](riak2.png)
+
+![RiakKV Ring](riak-ring.png)
+
+### Redis
+
+- Redis
+  - Výkonný klíč-hodnota úložiště v paměti
+  - Podporuje rozmanité datové typy
+- Datové typy
+  - Řetězce (strings)
+  - Seznamy (lists)
+  - Množiny (sets)
+  - Uspořádané množiny (sorted sets)
+  - Mapy (hashes)
+  - Bitmapy (bitmaps)
+  - HyperLogLogs
+- Operace
+  - GET, SET: Čtení a zápis řetězců
+  - LPUSH, RPUSH, LPOP, RPOP: Práce se seznamy
+  - SADD, SREM, SISMEMBER: Práce s množinami
+  - ZADD, ZRANK, ZRANGE: Práce s uspořádanými množinami
+  - HSET, HGET, HDEL: Práce s mapami
+- TTL (Time-To-Live)
+  - Expirace klíčů po určité době
+  - SETEX, PSETEX: Nastavení TTL při zápisu
+  - EXPIRE, PEXPIRE: Nastavení TTL pro existující klíč
+  - TTL, PTTL: Získání zbývajícího času do expirace
+
+![alt text](redis1.png)
+![alt text](redis2.png)
+![alt text](redis3.png)
+![alt text](redis4.png)
+
+### Cassandra
+
+- Cassandra
+  - Distribuovaná databáze s vysokou škálovatelností a dostupností
+  - Navržená pro práci s velkým množstvím dat
+- Keyspaces
+  - Kontejnery pro ukládání sloupcových rodin (column families)
+  - Definují replikační faktor a strategii
+- Column families
+  - Ukládají data v Cassandra
+  - Skládají se ze sloupců a řádků
+- CRUD operace
+  - CREATE: Vytvoření keyspace, tabulky nebo indexu
+  - INSERT: Vložení nebo aktualizace záznamu
+  - SELECT: Čtení záznamů
+  - UPDATE: Aktualizace záznamu
+  - DELETE: Smazání záznamu nebo části záznamu
+
+![alt text](cassandra1.png)
+![alt text](cassandra2.png)
+![alt text](cassandra3.png)
+![alt text](cassandra4.png)
+![alt text](cassandra5.png)
+![alt text](cassandra6.png)
+![alt text](cassandra7.png)
+![alt text](cassandra8.png)
+![alt text](cassandra9.png)
+
+### MongoDB
+
+- MongoDB
+  - Dokumentová databáze s vysokou škálovatelností a flexibilitou
+  - Ukládá data ve formátu BSON (binární JSON)
+- CRUD operace
+  - Create: Vytvoření dokumentu (db.kolekce.insert())
+  - Read: Čtení dokumentů (db.kolekce.find())
+  - Update: Aktualizace dokumentů (db.kolekce.update())
+  - Delete: Smazání dokumentů (db.kolekce.remove())
+- Operátory aktualizace
+  - $set: Nastavení hodnoty pole nebo vytvoření nového pole
+  - $unset: Odstranění pole
+  - $inc: Inkrementace hodnoty pole
+  - $mul: Násobení hodnoty pole
+  - $rename: Přejmenování pole
+- Operátory dotazování
+  - $eq: Rovnost
+  - $gt, $gte: Větší než, větší než nebo rovno
+  - $lt, $lte: Menší než, menší než nebo rovno
+  - $ne: Nerovnost
+  - $in: Hodnota je v seznamu
+  - $nin: Hodnota není v seznamu
+  - $and, $or, $not: Logické operátory
+- Projekce
+  - Určuje, která pole vrátit v dotazu
+  - 1 pro zobrazení pole, 0 pro skrytí pole (např. `{pole: 1}`)
+- Modifikátory
+  - $limit: Omezení počtu vrácených dokumentů
+  - $skip: Přeskočení určitého počtu dokumentů
+  - $sort: Řazení dokumentů podle zadaných kritérií
