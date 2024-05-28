@@ -1,4 +1,4 @@
-# PAG (BE4M36SWA)
+# PAG (BE4M35PAG)
 
 ## Questions
 
@@ -14,3 +14,41 @@
 
 ## Describe basic communication operations used in parallel algorithms. Show cost analysis of one-to-all broadcast, all-to-all-broadcast, scatter, and all-to-all personalized communication on a ring, mesh, and hypercube. Describe All-Reduce and Preﬁx-Sum operations and outline their usage.
 
+### one-to-all
+
+![alt text](one-to-all.png)
+
+### all-to-all-broadcast
+
+![alt text](a-to-a.png)
+![alt text](a-to-a-2.png)
+![alt text](a-to-a-cost.png)
+
+### scatter/gatter
+
+je to v principu one to all personalized
+
+![alt text](scatter.png)
+![alt text](scatter1.png)
+
+### all-to-all personalized communication
+
+![alt text](a-to-a-p-1.png)
+![alt text](a-to-a-p-2.png)
+![alt text](a-to-a-p-3.png)
+![alt text](a-to-a-p-4.png)
+![alt text](a-to-a-p-5.png)
+![alt text](a-to-a-p-6.png)
+
+### All-Reduce
+
+![alt text](allreduce.png)
+
+### Preﬁx-Sum
+
+![alt text](prefixsum.png)
+![alt text](prefixsum2.png)
+
+Shrnutí vzorečků
+
+![alt text](summary.png)
