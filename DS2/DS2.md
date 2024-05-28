@@ -249,7 +249,7 @@ komutativita -> x . y = y . x
 
 asociativita -> (x . y) . z = x . (y . z)
 
-Idempotence je v matematice, zejména v abstraktní algebře, vlastnost algebraických operací či prvků nějaké algebry. Operace je idempotentní, pokud jejím opakovaným použitím na nějaký vstup vznikne stejný výstup, jako vznikne jediným použitím dané operace. Tato vlastnost se vyskytuje například v lineární algebře u projekcí, je to také jedna z definičních vlastností uzávěrového operátoru. 
+Idempotence je v matematice, zejména v abstraktní algebře, vlastnost algebraických operací či prvků nějaké algebry. Operace je idempotentní, pokud jejím opakovaným použitím na nějaký vstup vznikne stejný výstup, jako vznikne jediným použitím dané operace. Tato vlastnost se vyskytuje například v lineární algebře u projekcí, je to také jedna z definičních vlastností uzávěrového operátoru. Například min(x, x) = x
 
 ![alt text](step16.png)
 ![alt text](summary.png)
