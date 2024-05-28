@@ -188,3 +188,110 @@ Polyglot persistence je koncept ve správě databází, který zahrnuje použit�
     - Databáze vyhledávačů pro katalogy produktů a vyhledávací funkce.
     - Databáze grafů pro doporučení založená na uživatelských vztazích a spojeních produktů.
     - Celkově lze říci, že polyglot persistence je o výběru správného nástroje pro správnou práci, maximalizaci efektivity aplikace prostřednictvím strategického využití databáze při zohlednění přidané složitosti a integračních problémů, které tento přístup přináší.
+
+## MapReduce (architecture, functions, data ﬂow, execution, use cases). Hadoop (MapReduce, HDFS).
+
+
+### MapReduce:
+- Architektura:
+  - Programovací model pro paralelní a distribuované zpracování velkého množství dat
+  - Skládá se ze dvou hlavních funkcí: Map a Reduce
+  - Obvykle se provádí na clusterech
+
+![alt text](progmodel.png)
+![alt text](defmapreduce.png)
+
+- Funkce:
+  1. Map: zpracování vstupních dat, transformace na páry klíč-hodnota
+  2. Reduce: agregace páru klíč-hodnota podle klíče a výpočet výsledku
+
+![alt text](mapreducefunctions.png)
+![alt text](mapreducefunctions2.png)
+![alt text](mapreducefunctions3.png)
+
+- Datový tok:
+  1. Vstupní data jsou rozdělena do částí (shard)
+  2. Map funkce se spustí na každém shardu paralelně a generuje páry klíč-hodnota
+  3. Páry klíč-hodnota jsou seskupeny podle klíčů
+  4. Reduce funkce zpracovává seskupené páry klíč-hodnota a vypočítá výsledky
+
+- Provedení:
+  1. Job Tracker: koordinuje celý proces, rozděluje úkoly, sleduje pokrok
+  2. Task Tracker: zpracovává map a reduce úkoly na jednotlivých uzlech
+
+- Příklady použití:
+  - Analýza textu a počítání slov
+  - Zpracování log souborů a analýza webového provozu
+  - Vyhledávání vzorů v datech
+  - Strojové učení a statistické analýzy
+
+### Provedení ze slidů
+
+![alt text](step1.png)
+![alt text](step2.png)
+![alt text](step3.png)
+![alt text](step4.png)
+![alt text](step5.png)
+![alt text](step6.png)
+![alt text](step9.png)
+![alt text](step10.png)
+![alt text](step11.png)
+![alt text](step12.png)
+![alt text](step13.png)
+![alt text](step14.png)
+![alt text](step15.png)
+
+lze použít combine function
+
+![alt text](combine.png)
+![alt text](step16.png)
+![alt text](summary.png)
+
+## Hadoop:
+- Open-source framework pro distribuované zpracování velkého množství dat
+- Hlavní komponenty:
+  1. Hadoop MapReduce
+  2. Hadoop Distributed File System (HDFS)
+
+## Hadoop MapReduce:
+- Implementace MapReduce modelu pro zpracování dat v Hadoopu
+- Řídí paralelní zpracování dat pomocí map a reduce funkcí
+- Podporuje škálování, odolnost vůči výpadkům a distribuci dat
+- Řeší Fault tolerance = nějaký node selže (master i slave)
+- Řeší Straggler - worker pracuje příliš dlouho, vyměním ho
+
+## HDFS - Hadoop Distributed File System:
+
+- Hlavní komponenty HDFS:
+  1. NameNode
+  2. DataNode
+
+- NameNode:
+  - Ústřední server pro správu metadata souborového systému
+  - Udržuje informace o adresářové struktuře, právech, a umístění bloků dat
+  - Komunikuje s DataNode pro správu uložených dat
+  - HDFS může mít jednu aktivní a jednu nebo více pasivních (záložních) NameNode
+  - Pasivní NameNode synchronizuje data s aktivní NameNode pro zajištění odolnosti vůči výpadkům
+
+![alt text](namenode.png)
+
+- DataNode:
+  - Servery, které skutečně ukládají data na disky
+  - Data jsou uložena ve formě bloků s pevnou velikostí (např. 64 MB nebo 128 MB)
+  - DataNode komunikuje s NameNode a zpracovává požadavky na čtení/zápis dat
+  - Data jsou automaticky replikována na více DataNode pro zajištění dostupnosti a odolnosti vůči výpadkům
+
+![alt text](datanode.png)
+- Práce s HDFS:
+  1. Uživatel pošle požadavek na čtení/zápis dat na NameNode
+  2. NameNode zkontroluje metadata a v případě zápisu vybere vhodné DataNode pro uložení dat
+  3. Uživatel komunikuje přímo s vybranými DataNode pro čtení nebo zápis dat
+  4. Po dokončení zápisu informuje DataNode NameNode o úspěšném uložení dat
+
+- HDFS je navržen pro:
+  1. Ukládání velkých souborů
+  2. Paralelní zpracování dat
+  3. Vysokou propustnost a odolnost vůči výpadkům
+  4. Integraci s Hadoop MapReduce pro efektivní zpracování dat
+
+![alt text](hadoopusecase.png)
