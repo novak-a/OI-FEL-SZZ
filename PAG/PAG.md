@@ -52,3 +52,16 @@ je to v principu one to all personalized
 Shrnutí vzorečků
 
 ![alt text](summary.png)
+
+
+## Describe performance metrics and scalability for parallel systems. How efficiency of a parallel algorithm depends on the problem size and the number of processors? Derive isoefficiency functions of a parallel algorithm for adding numbers (including communication between processors) and explain how it characterizes the algorithm.
+
+### Describe performance metrics and scalability for parallel systems.
+
+Výkonnostní metrika může být speedup. Na paperu jsou další related vzorečky.
+
+![alt text](speedup.png)
+![alt text](speedup-1.png)
+![alt text](amdahl.png)
+
+### How efficiency of a parallel algorithm depends on the problem size and the number of processors?
