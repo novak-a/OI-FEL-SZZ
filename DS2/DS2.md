@@ -490,6 +490,10 @@ Idempotence je v matematice, zejména v abstraktní algebře, vlastnost algebrai
   - UPDATE: Aktualizace záznamu
   - DELETE: Smazání záznamu nebo části záznamu
 
+CQL neumí joiny, takže je to extrémně rychlý
+
+
+![alt text](cassandra0.png)
 ![alt text](cassandra1.png)
 ![alt text](cassandra2.png)
 ![alt text](cassandra3.png)
@@ -531,3 +535,13 @@ Idempotence je v matematice, zejména v abstraktní algebře, vlastnost algebrai
   - $limit: Omezení počtu vrácených dokumentů
   - $skip: Přeskočení určitého počtu dokumentů
   - $sort: Řazení dokumentů podle zadaných kritérií
+
+![alt text](mongo1.png)
+![alt text](mongo2.png)
+![alt text](mongo3.png)
+![alt text](mongo4.png)
+![alt text](mongo5.png)
+![alt text](mongo6.png)
+![alt text](mongo7.png)
+![alt text](mongo8.png)
+![alt text](mongo9.png)
