@@ -365,3 +365,39 @@ Idempotence je v matematice, zejména v abstraktní algebře, vlastnost algebrai
 - Porovnávací výrazy
   - '=', '!=', '<', '>', '<=', '>='
   - 'eq', 'ne', 'lt', 'gt', 'le', 'ge'
+
+### SPARQL
+
+![alt text](sparql1.png)
+![alt text](sparql2.png)
+- SPARQL
+  - Jazyk pro dotazování a manipulaci s RDF grafovými daty
+  - Používá se pro práci s daty ve formátu RDF
+- Subgrafické porovnávání
+  - Hledání vzorů v RDF grafech
+  - Provádí se pomocí trojic subjekt-predikát-objekt
+- Grafové vzory
+  - Základní: Jednoduché trojice (např. `?x rdf:type foaf:Person`)
+  - Volitelné: Používají klíčové slovo OPTIONAL (např. `OPTIONAL {?x foaf:mbox ?email}`)
+  - Alternativní: Používají klíčové slovo UNION (např. `{?x foaf:name ?name} UNION {?x rdfs:label ?name}`)
+- Datasety
+  - Default: Graf, který je vyhledáván implicitně
+  - Named: Grafy, které jsou vyhledávány explicitně pomocí klíčového slova FROM NAMED
+- Filtry
+  - Omezují výsledky dotazu podle zadaných podmínek
+  - Používají klíčové slovo FILTER (např. `FILTER (?age >= 18)`)
+- Modifikátory řešení
+  - Order by: Řazení výsledků (např. `ORDER BY ?name`)
+  - Limit: Omezení počtu výsledků (např. `LIMIT 10`)
+  - Offset: Posunutí výsledků (např. `OFFSET 5`)
+  - Distinct: Odstranění duplikátů (např. `SELECT DISTINCT ?name`)
+- Formy dotazů
+  - SELECT: Výběr proměnných
+  - CONSTRUCT: Vytváření nových RDF trojic
+  - ASK: Dotaz na existenci vzoru
+  - DESCRIBE: Popis zdrojů RDF
+  
+    ![alt text](sparql3.png)
+    ![alt text](sparql4.png)
+    ![alt text](sparql5.png)
+    ![alt text](sparql6.png)
