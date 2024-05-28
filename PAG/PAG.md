@@ -65,3 +65,19 @@ Výkonnostní metrika může být speedup. Na paperu jsou další related vzore�
 ![alt text](amdahl.png)
 
 ### How efficiency of a parallel algorithm depends on the problem size and the number of processors?
+
+![alt text](efectivity.png)
+![alt text](efectivity-1.png)
+![alt text](price.png)
+![alt text](dependency.png)
+![alt text](graph.png)
+
+### Derive isoefficiency functions of a parallel algorithm for adding numbers (including communication between processors) and explain how it characterizes the algorithm.
+
+izoefektivní funkce = Určuje snadnost, s jakou může paralelní systém udržovat konstantní účinnost, a tím dosahovat zrychlení rostoucích úměrně počtu procesorů
+
+![alt text](izo1.png)
+![alt text](izo2.png)
+![alt text](izo3.png)
+![alt text](izo4.png)   
+![alt text](izo5.png)
