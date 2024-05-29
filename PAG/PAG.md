@@ -98,3 +98,32 @@ optimálně je potřeba to udělat
 ![alt text](sum6.png)
 ![alt text](sum7.png)
 ![alt text](sum8.png)
+
+## Explain and compare two parallel algorithms for matrix-vector multiplication. Describe a parallel algorithm for matrix-matrix multiplication and explain the idea of Cannon’s algorithm. Discuss the principle and properties of the DNS algorithm used for matrix-matrix multiplication.
+
+### matrix-vector multiplication
+
+![alt text](matrix-vector.png)
+![alt text](m-v.png)
+![alt text](m-v-2.png)
+![alt text](m-v-3.png)
+![alt text](m-v-5.png)
+
+### matrix-matrix multiplication
+
+![alt text](matrix-matrix.png)
+![alt text](m-m.png)
+
+### Cannon’s algorithm
+
+![alt text](cannon1.png)
+![alt text](cannon2.png)
+
+### Discuss the principle and properties of the DNS algorithm used for matrix-matrix multiplication.
+
+![alt text](dns1.png)
+![alt text](dns2.png)
+![alt text](dns3.png)
+![alt text](dns4.png)
+
+### Outline the principle of sorting networks and describe parallel bitonic sort, including its scalability. Explain parallel enumeration sort algorithm on PRAM model, including its scalability.
