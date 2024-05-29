@@ -81,3 +81,20 @@ izoefektivní funkce = Určuje snadnost, s jakou může paralelní systém udrž
 ![alt text](izo3.png)
 ![alt text](izo4.png)   
 ![alt text](izo5.png)
+
+sčítání čísel pro p = n je to O(log(n))
+
+![alt text](sum1.png)
+
+pro p < n bude mít každý p více prvků
+
+![alt text](sum2.png)
+![alt text](sum3.png)
+![alt text](sum4.png)
+![alt text](sum5.png)
+
+optimálně je potřeba to udělat
+
+![alt text](sum6.png)
+![alt text](sum7.png)
+![alt text](sum8.png)
