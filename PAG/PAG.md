@@ -142,9 +142,14 @@ udělám sort
 
 ![alt text](bitonic.JPG)
 
-tady je obrázek blbě
+Enum sort
+
+Concurrent read concurrent write (CRCW)—multiple processors can read and write. A CRCW PRAM is sometimes called a concurrent random-access machine.
 
 ![alt text](enum.png)
+![alt text](enum1.png)
+![alt text](enum2.png)
+![alt text](enum3.png)
 
 ## Explain all steps of a parallel algorithm for ﬁnding connected components in a graph given by the adjacency matrix. Using an example, illustrate a parallel algorithm for ﬁnding a maximal independent set in a sparse graph.
 
