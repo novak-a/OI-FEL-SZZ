@@ -126,9 +126,27 @@ optimálně je potřeba to udělat
 ![alt text](dns3.png)
 ![alt text](dns4.png)
 
-### Outline the principle of sorting networks and describe parallel bitonic sort, including its scalability. Explain parallel enumeration sort algorithm on PRAM model, including its scalability.
+## Outline the principle of sorting networks and describe parallel bitonic sort, including its scalability. Explain parallel enumeration sort algorithm on PRAM model, including its scalability.
 
-### Explain all steps of a parallel algorithm for ﬁnding connected components in a graph given by the adjacency matrix. Using an example, illustrate a parallel algorithm for ﬁnding a maximal independent set in a sparse graph.
+![alt text](bitonic1.png)
+![alt text](bitonic2.png)
+
+udělám bitonickou sekvenci
+
+![alt text](bitonic4.png)
+![alt text](bitonic5.png)
+
+udělám sort
+
+![alt text](bitonic3.png)
+
+![alt text](bitonic.JPG)
+
+tady je obrázek blbě
+
+![alt text](enum.png)
+
+## Explain all steps of a parallel algorithm for ﬁnding connected components in a graph given by the adjacency matrix. Using an example, illustrate a parallel algorithm for ﬁnding a maximal independent set in a sparse graph.
 
 Aha, ty kroky se opakují.
 
@@ -144,3 +162,7 @@ proto se očekává, že to bude v průměru aproximační
 Komponenty
 
 ![alt text](scc.png)
+
+Sparse matice
+
+![alt text](sparse.png)
