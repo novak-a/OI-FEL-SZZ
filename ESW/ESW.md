@@ -530,3 +530,254 @@ Důvody pro fázi rozehřátí:
 1. Just-In-Time (JIT) kompilace: Aplikace založené na bytecode, jako je Java, používají JIT kompilátor pro kompilaci bytecode na strojový kód během runtime. Tato kompilace může trvat určitý čas a zpočátku zpomalit výkon.
 2. Profilování a optimalizace: Aplikace nebo systém mohou provádět profilování a optimalizace během fáze rozehřátí, což může způsobit zpoždění v dosažení plného výkonu.
 3. Cache a přednačítání: Aplikace mohou mít cache nebo přednačítání dat, které mohou být potřeba pro rychlejší běh. Tyto cache nebo přednačítaná data se mohou postupně naplňovat během fáze rozehřátí.
+
+Jak zohlednit fázi rozehřátí při testování výkonu:
+- Během testování výkonu je důležité zohlednit fázi rozehřátí, protože může ovlivnit výsledky testů
+- Testy by měly být prováděny po dosažení optimálního výkonu aplikace nebo systému, aby poskytovaly správné a relevantní výsledky
+- Mohou být použity různé techniky pro zohlednění fáze rozehřátí, například:
+  - Provedení několika krátkých běhů aplikace nebo testů před spuštěním hlavního testu
+  - Použití statistických metod pro eliminaci nebo minimalizaci vlivu fáze rozehřátí na výsledky testů
+
+## Data races, CPU pipelining and superscalar architecture, memory barrier, volatile variable. Synchronization - thin, fat and biased locking, reentrant locks. Atomic operations based on compare-and-set instructions, atomic ﬁeld updaters. Non-blocking algorithms, wait free algorithms, non-blocking stack (LIFO).
+
+### Data races
+
+- Problém v paralelním programování, kdy dojde ke konkurenčnímu přístupu dvou nebo více vláken k témuž datovému objektu bez vhodné synchronizace
+- Může vést k nekonzistentním a nepředvídatelným výsledkům, což ztěžuje ladění a opravu chyb
+- Nejčastěji se vyskytuje v programovacích jazycích, které umožňují ruční správu vláken a synchronizaci, jako jsou C++, Java nebo C#
+
+Příčiny data race:
+1. Neexistující nebo nesprávná synchronizace přístupu k datům
+2. Chybějící zámky (locks) nebo bariéry (barriers) pro omezení přístupu k datům
+3. Nesprávná implementace atomických operací nebo kritických sekcí
+
+Jak předcházet data race:
+1. Použití zámků (locks) pro zajištění vzájemného vyloučení při přístupu k datům
+2. Využití atomických operací, které zajišťují, že během provedení operace nedojde k přerušení vlákny
+3. Použití bariér (barriers) nebo podmínek (conditions) pro koordinaci a synchronizaci vláken
+4. Vhodná dekompozice úloh a dat pro snížení potřeby sdílení dat mezi vlákny
+5. Použití vysokoúrovňových abstrakcí a knihoven pro paralelní programování, které řeší synchronizaci za vás (např. OpenMP, TBB, C++11 threads)
+
+Detekce data race:
+- Existují nástroje a techniky pro automatickou detekci data race, například:
+  - Statická analýza kódu: Nástroje jako Clang Static Analyzer nebo PVS-Studio mohou pomoci identifikovat možné data race v kódu
+  - Dynamická analýza běhu: Nástroje jako Helgrind (součást Valgrind), ThreadSanitizer nebo Intel Inspector mohou sledovat běh aplikace a detekovat data race za běhu
+  
+### CPU pipelining and superscalar architecture
+
+CPU pipelining (potrubí):
+
+- Technika zvyšování výkonu procesoru tím, že se zpracování instrukcí rozdělí do několika menších kroků (fází)
+- Každá fáze zpracovává část instrukce a poté ji předává další fázi
+- Umožňuje paralelní zpracování více instrukcí, kdy každá instrukce prochází jednotlivými fázemi potrubí
+
+![alt text](pipelining.png)
+
+Superskalární architektura:
+
+- Rozšíření pipeliningu, které umožňuje zpracovávat více instrukcí současně v rámci jednoho cyklu hodinových tiků
+- Superskalární procesory mají více výkonných jednotek, které mohou zpracovávat instrukce paralelně
+- Díky této architektuře je možné dosáhnout vyššího výkonu a rychlejšího zpracování instrukcí než u tradičních pipelined procesorů
+- rozdíl s více procesory je ten, že se ALU znásobí jen v některých částech
+  
+![alt text](superscalar1.png)
+
+Kombinace CPU pipeliningu a superskalární architektury:
+
+1. Instrukce jsou načítány do potrubí a rozděleny do menších kroků (fází)
+2. Procesor s superskalární architekturou může zpracovávat více instrukcí současně v rámci jednoho cyklu hodinových tiků
+3. Výsledkem je vyšší výkon a rychlejší zpracování instrukcí
+
+Příklady procesorů s pipeliningem a superskalární architekturou:
+
+- Většina moderních procesorů (Intel Core, AMD Ryzen) používá kombinaci pipeliningu a superskalární architektury pro dosažení vysokého výkonu
+  
+### memory barrier 
+
+- Mechanismus v paralelním programování, který zajišťuje správné pořadí přístupu k paměti mezi různými vlákny nebo procesory
+- Pomáhá předcházet problémům se souběžností, jako jsou data race nebo nekonzistence paměti
+- Paměťové bariéry mohou být implementovány na úrovni hardware (CPU instrukce) nebo software (programovací jazyk, knihovny)
+
+Účel paměťových bariér:
+
+1. Zajištění, že zápis nebo čtení určitých dat je dokončeno před pokračováním dalších operací
+2. Zajištění, že změny v paměti provedené jedním vláknem nebo procesorem jsou viditelné pro ostatní vlákna nebo procesory
+3. Zajištění, že operace na sdílených datech jsou prováděny ve správném pořadí
+
+Příklady paměťových bariér:
+
+- V jazyce C++ mohou být použity atomické operace s různými paměťovými řády (memory_order) pro zajištění správného pořadí přístupu k paměti
+- V jazyce Java mohou být použity synchronizované bloky nebo volatile proměnné pro zajištění správného pořadí přístupu k paměti
+- Některé CPU instrukce, jako je mfence, sfence a lfence na platformě x86, poskytují paměťové bariéry na úrovni hardware
+
+![alt text](membarrier.png)
+![alt text](membarrier1.png)
+
+### volatile variable
+
+- Klíčové slovo `volatile` v programovacích jazycích (jako C, C++ nebo Java) označuje proměnnou, která může být změněna vnějšími procesy nebo paralelními vlákny
+- Při použití `volatile` kompilátor a běhové prostředí zajišťují, že přístupy k této proměnné nebudou optimalizovány ani mezipaměťovány, což zajišťuje konzistentní a aktuální hodnoty pro všechna vlákna
+  
+#### Java
+- `volatile` v Javě se používá pro označení proměnné, jejíž hodnota může být modifikována více vlákny a jejíž přístupy by neměly být optimalizovány.
+- Klíčové vlastnosti:
+  - Viditelnost: Čtení a zápis proměnné označené jako `volatile` jsou zaručeně viditelné pro ostatní vlákna.
+  - Pořadí: Ustanovuje vzájemný vztah happens-before, což zajišťuje, že akce před zápisem do `volatile` proměnné se provedou před následujícími akcemi po jejím čtení.
+  - Atomické R/W operace
+- Použití:
+  - Jednoduché příznakové proměnné sdílené mezi více vlákny.
+  - Koordinace mezi vlákny pomocí sdílené proměnné.
+- Omezení:
+  - Neposkytuje atomicitu pro složené operace.
+  - Omezené synchronizační schopnosti ve srovnání s `synchronized` bloky, zámky nebo atomickými třídami.
+
+#### C++
+- Klíčové slovo `volatile` v C++ označuje, že hodnota proměnné se může kdykoliv změnit bez vědomí kompilátoru, často z důvodu externích faktorů.
+- Klíčové vlastnosti:
+  - Čtení/Zápis volatile: Přikazuje kompilátoru vždy číst a zapisovat do paměti pro danou proměnnou, aniž by se spoléhal na mezipaměťové hodnoty.
+  - Externí modifikace: Označuje, že proměnnou mohou měnit externí faktory, jako je hardware nebo jiná vlákna.
+- Použití:
+  - Přístup k registrům hardware připojených k paměti.
+  - Vícevláknové prostředí, kde více vláken přistupuje ke stejné proměnné.
+- Omezení:
+  - Samotné `volatile` neposkytuje záruky synchronizace nebo atomicity.
+  - Pro synchronizaci a viditelnost napříč více jádry nebo vlákny je nutné použít vhodné synchronizační mechanismy, jako jsou mutexy, atomické typy nebo bariéry paměti.
+
+### Synchronization - thin, fat and biased locking, reentrant locks 
+
+Tenký zámek (Thin lock):
+
+- Lehký zámek s nízkým režijním zatížením, používaný v situacích, kdy není vysoká konkurence mezi vlákny
+- Rychlý a efektivní způsob zajištění synchronizace pro jednoduché případy
+- V případě zvýšené konkurence mezi vlákny může být tenký zámek transformován na tlustý zámek
+
+Tlustý zámek (Fat lock):
+
+- Robustnější zámek s vyšším režijním zatížením, používaný v situacích, kdy je vysoká kontestace mezi vlákny
+- Poskytuje lepší výkon při zajištění synchronizace v případě, že se více vláken soupeří o přístup ke sdíleným zdrojům
+- Transformace z tenkého zámku na tlustý zámok probíhá za běhu, pokud je to nutné
+
+Zaujatý zámek (Biased locking):
+
+- Optimalizace zámku, která zvyšuje výkon synchronizace v situacích, kdy objekt používá jedno vlákno a ostatní vlákna se o něj nezajímají
+- Zámek je "zaujatý" ve prospěch jednoho vlákna, které může provádět synchronizované operace bez nutnosti získávání zámku
+- Pokud se objekt stane kontestovaným mezi více vlákny, zaujatý zámek může být zrušen a převeden na tenký nebo tlustý zámek
+
+Reentrant zámky:
+
+- Typ synchronizačního mechanismu, který umožňuje vláknu získat zámek vícekrát, aniž by došlo k uváznutí (deadlock)
+- Reentrant zámek sleduje, které vlákno drží zámek a kolikrát ho získalo
+- Vlákno může opustit zámek pouze tehdy, pokud uvolní zámek stejný počet, kolikrát ho získalo
+
+Vlastnosti reentrant zámků:
+
+1. Povolují vnořené zamykání (nested locking), což umožňuje vláknu získat zámek vícekrát, aniž by došlo k uváznutí
+2. Zvyšují robustnost kódu tím, že se zabrání uváznutí při opakovaném získání zámku stejným vláknem
+3. Mohou poskytnout pokročilé funkce, jako je podpora přerušitelného zamykání, časově omezené zamykání nebo spravedlivé plánování
+
+
+### Atomic operations based on compare-and-set instructions, atomic ﬁeld updaters
+
+- Atomické operace, které kombinují porovnání a nastavení hodnoty v jediném nesdíleném (atomic) kroku
+- Běžně používány pro implementaci bezpečných a efektivních synchronizačních mechanismů, jako jsou zámky, semafory nebo počítadla
+- Základem pro mnoho lock-free a wait-free algoritmů, které umožňují vysoký výkon a škálovatelnost v paralelním prostředí
+  
+Princip compare-and-set (CAS) operace:
+
+1. Porovnej hodnotu sdílené proměnné s očekávanou hodnotou
+2. Pokud se hodnoty shodují, nastav novou hodnotu proměnné
+3. Operace vrátí informaci, zda byla hodnota úspěšně nastavena nebo ne
+
+Výhody compare-and-set operací:
+
+- Poskytují atomičnost a zajišťují konzistenci dat při přístupu více vláken
+- Mohou snižovat režijní zatížení v porovnání s tradičními zámky nebo synchronizačními mechanismy
+- Umožňují vytvářet lock-free a wait-free algoritmy, které jsou škálovatelné a odolné vůči uváznutí (deadlock) a vyhladovění (starvation)
+
+Atomické aktualizátory polí (Atomic Field Updaters):
+
+- Specializované utility pro atomické aktualizace polí objektů bez nutnosti vytvářet nové objekty s atomickými proměnnými
+- Umožňují provádět operace na jednotlivých polích objektů, které jsou atomické a bezpečné při současném přístupu více vláken
+- Zvyšují výkon a snižují režijní zatížení v paralelním prostředí díky snížení počtu vytvořených objektů
+
+Výhody atomických aktualizátorů polí:
+
+- Poskytují atomičnost a zajišťují konzistenci dat při přístupu více vláken k jednotlivým polím objektů
+- Snížení režijního zatížení a zlepšení výkonu v paralelním prostředí díky menšímu počtu vytvořených objektů
+- Umožňují vytvářet lock-free a wait-free algoritmy pro práci s objekty
+
+Použití atomických aktualizátorů polí:
+
+- V jazyce Java lze použít třídy `AtomicIntegerFieldUpdater`, `AtomicLongFieldUpdater` a `AtomicReferenceFieldUpdater` z balíčku `java.util.concurrent.atomic`
+- Pro jejich použití je nutné definovat pole objektu jako `volatile`
+
+### Non-blocking algorithms, wait free algorithms, non-blocking stack (LIFO).
+
+#### Neblokující algoritmy (Non-blocking algorithms):
+
+- Typ algoritmů, které nezabraňují přístupu k sdíleným datům nebo zdrojům jiným vláknům, když je prováděna operace
+- Zajišťují, že žádné vlákno nebude čekat na neomezeně dlouhou dobu na dokončení operace prováděné jiným vláknem
+- Mohou být klasifikovány jako lock-free, wait-free nebo obstruction-free, v závislosti na garancích, které poskytují
+
+Typy neblokujících algoritmů:
+
+1. Lock-free algoritmy:
+   - Zajišťují, že alespoň jedno vlákno dokončí svou operaci v konečném čase
+   - Zabraňují uváznutí (deadlocks) a vyhladovění (starvation)
+2. Wait-free algoritmy:
+   - Poskytují garanci, že každé vlákno dokončí svou operaci v konečném čase
+   - Zabraňují uváznutí, vyhladovění a čekání na dokončení jiných vláken
+3. Obstruction-free algoritmy:
+   - Poskytují garanci, že operace bude dokončena v konečném čase pouze v případě, že žádné jiné vlákno nezasahuje do provádění operace
+   - Slabší záruky než lock-free a wait-free algoritmy, ale stále zabraňují uváznutí
+
+Výhody neblokujících algoritmů:
+
+- Vysoký výkon a škálovatelnost v paralelním prostředí
+- Zabraňují uváznutí a vyhladovění, které mohou nastat při použití tradičních zámků a synchronizačních mechanismů
+- Zvyšují robustnost a spolehlivost paralelního kódu díky snížení možnosti uváznutí a vyhladovění
+
+#### Wait-free algoritmy:
+
+- Speciální třída neblokujících algoritmů, které poskytují nejlepší záruky konvergence pro současně běžící vlákna
+- Zajišťují, že každé vlákno dokončí svou operaci v konečném čase bez ohledu na chování ostatních vláken
+- Zabraňují problémům, jako je uváznutí (deadlock), vyhladovění (starvation) a zbytečné čekání na dokončení jiných vláken
+
+Vlastnosti wait-free algoritmů:
+1. Konečná konvergence: Každé vlákno dokončí svou operaci v konečném čase, bez ohledu na ostatní vlákna
+2. Robustnost: Odpovědnost za dokončení operace leží na provádějícím vlákně, což zabraňuje závislosti na chování jiných vláken
+3. Spravedlivost: Žádné vlákno nemůže být trvale blokováno jiným vláknem, což zabraňuje vyhladovění
+
+Výhody wait-free algoritmů:
+- Vysoká škálovatelnost a výkon v paralelním prostředí
+- Zlepšení spolehlivosti a robustnosti paralelního kódu díky odstranění závislosti na chování jiných vláken
+- Poskytují nejlepší záruky konvergence ze všech typů neblokujících algoritmů
+
+Příklady wait-free algoritmů:
+- Wait-free fronty, zásobníky nebo počítadla, které zajišťují spravedlivý přístup ke sdíleným datovým strukturám
+- Wait-free implementace atomických proměnných nebo operací, jako jsou compare-and-set nebo fetch-and-add
+
+Použití wait-free algoritmů může být složitější než použití lock-free nebo obstruction-free algoritmů, ale poskytuje nejlepší záruky pro paralelní výpočty.
+
+#### Neblokující zásobník (LIFO) - Non-blocking Stack:
+
+- Zásobník implementovaný jako neblokující datová struktura, která umožňuje současný přístup více vláken bez nutnosti použití zámků nebo synchronizačních mechanismů
+- Používá atomické operace, jako jsou compare-and-set (CAS), pro zajištění konzistence a bezpečnosti dat při současném přístupu více vláken
+- Zabraňuje problémům, jako je uváznutí (deadlock) a vyhladovění (starvation), které mohou nastat při použití tradičních zámků a synchronizačních mechanismů
+
+Základní operace nebokujícího zásobníku (LIFO):
+
+1. Push: Přidání prvku na vrchol zásobníku
+2. Pop: Odebrání prvku z vrcholu zásobníku
+
+Implementace nebokujícího zásobníku (LIFO):
+
+- Základem implementace je spojový seznam s hlavou (head), která ukazuje na vrchol zásobníku
+- Pro operaci Push a Pop se používá compare-and-set (CAS) operace, která zajišťuje atomičnost a konzistenci dat při přístupu více vláken
+- V případě, že CAS operace selže, vlákno opakuje operaci, dokud není úspěšná
+
+Výhody nebokujícího zásobníku (LIFO):
+
+- Vysoký výkon a škálovatelnost v paralelním prostředí díky snížení režijního zatížení spojeného se zámky a synchronizací
+- Zabraňuje uváznutí (deadlock) a vyhladovění (starvation), které mohou nastat při použití tradičních zámků a synchronizačních mechanismů
+- Zvyšuje robustnost a spolehlivost paralelního kódu díky odstranění možnosti uváznutí a vyhladovění
