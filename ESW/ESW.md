@@ -1295,3 +1295,213 @@ Lokalita dat je klíčovým aspektem optimalizace výkonu aplikací. Správné u
 
 
 ## Networking, OSI model, C10K problem. Blocking and non-blocking input/output, threading server, event-driven server. Event-based input/output approaches. Native buffers in JVM, channels and selectors.
+
+### OSI model
+
+1. Co je OSI model?
+   - OSI model je konceptuální rámec, který popisuje, jak různé vrstvy komunikačního systému spolupracují při přenosu dat mezi síťovými zařízeními
+   - Model se skládá ze 7 vrstev, které definují různé úrovně abstrakce a funkcí komunikačního procesu
+
+2. Seznam vrstev OSI modelu:
+   1. Fyzická vrstva (Physical Layer)
+   2. Linková vrstva (Data Link Layer)
+   3. Síťová vrstva (Network Layer)
+   4. Transportní vrstva (Transport Layer)
+   5. Relační vrstva (Session Layer)
+   6. Prezentační vrstva (Presentation Layer)
+   7. Aplikační vrstva (Application Layer)
+
+3. Popis vrstev OSI modelu:
+   1. Fyzická vrstva:
+      - Zajišťuje přenos a přijímání bitů přes fyzické médium (např. kabel, rádiové vlny)
+      - Definuje fyzické charakteristiky konektorů, kabelů a signálů
+
+   2. Linková vrstva:
+      - Řeší přenos datových rámců mezi sousedními uzly v síti
+      - Zajišťuje kontrolu chyb a řízení toku dat
+
+   3. Síťová vrstva:
+      - Zajišťuje směrování a přeposílání datových paketů mezi různými sítěmi
+      - Spravuje adresování a segmentaci dat
+
+   4. Transportní vrstva:
+      - Zajišťuje spolehlivý přenos dat mezi koncovými uzly
+      - Řídí tok dat, kontrolu chyb a obnovu ztracených dat
+
+   5. Relační vrstva:
+      - Řídí spojení mezi aplikacemi a zajišťuje jejich správnou funkci
+      - Udržuje a ukončuje komunikační relace
+
+   6. Prezentační vrstva:
+      - Zajišťuje převod dat mezi aplikacemi a síťovým formátem
+      - Řídí kódování, kompresi a šifrování dat
+
+   7. Aplikační vrstva:
+      - Poskytuje rozhraní mezi aplikacemi a komunikačními službami
+      - Zajišťuje přístup k síťovým službám, jako jsou e-mail, webové stránky a databáze
+
+![alt text](osi.png)
+
+### C10K problem
+
+1. Co je problém C10K?
+   - Problém C10K je výkonový problém spojený se schopností serveru zvládat více než 10 000 současných síťových spojení
+   - Tento problém byl poprvé popsán v roce 1999 a odráží výzvy spojené s růstem počtu uživatelů a potřeby serverů zvládat více spojení
+
+2. Příčiny problému C10K:
+   - Omezení výkonu způsobená tradičními síťovými modely (jako je model jeden proces/jeden vlákno na jedno spojení)
+   - Vysoká režie spojená s vytvářením a zrušením vláken nebo procesů pro každé spojení
+   - Nedostatek operačního systému a hardwarové podpory pro vysoký počet současných spojení
+
+3. Řešení problému C10K:
+   - Použití vícevláknových nebo asynchronních modelů serverů, které mohou zpracovávat více spojení pomocí méně zdrojů
+   - Využití funkce epoll (Linux) nebo kqueue (BSD, macOS) pro efektivní sledování stavu více síťových spojení
+   - Použití non-blocking I/O operací, které umožňují serveru pokračovat v práci, zatímco čeká na dokončení I/O operace
+   - Optimalizace operačního systému a hardwaru pro zvýšení propustnosti a snížení režie spojené s přenosem dat
+
+4. Význam řešení problému C10K:
+   - Zlepšení výkonu serverů a schopnosti zvládat vyšší zátěž
+   - Zajištění škálovatelnosti serverů, které mohou růst spolu s počtem uživatelů a potřebami aplikací
+   - Umožnění efektivnějšího využití zdrojů serverů, což vede ke snížení nákladů na provoz a správu
+
+Problém C10K odráží výzvy spojené se zvládáním velkého počtu současných síťových spojení na serverech. Řešení tohoto problému zahrnuje použití vícevláknových, asynchronních nebo non-blocking modelů serverů, optimalizaci operačního systému a hardwaru a využití pokročilých technologií pro sledování a správu síťových spojení.
+
+### Blocking and non-blocking input/output
+
+
+1. Co je blocking I/O?
+   - Blocking I/O je metoda vstupu/výstupu, při které se vykonávání programu zastaví, dokud nebude dokončena I/O operace
+   - Během čekání na dokončení I/O operace je proces nebo vlákno blokováno a nemůže vykonávat žádné další úkoly
+
+2. Co je non-blocking I/O?
+   - Non-blocking I/O je metoda vstupu/výstupu, při které se vykonávání programu nepozastavuje, dokud nebude dokončena I/O operace
+   - Místo čekání na dokončení I/O operace může proces nebo vlákno pokračovat v jiných úkolech a zpět ke zpracování I/O operace se vrátí, až bude hotova
+
+3. Porovnání blocking a non-blocking I/O:
+   - Výkon: Non-blocking I/O může zlepšit výkon aplikací tím, že minimalizuje čas strávený čekáním na dokončení I/O operací
+   - Složitost: Blocking I/O je jednodušší na implementaci a pochopení, zatímco non-blocking I/O vyžaduje více pozornosti k správě asynchronních operací
+   - Vhodnost: Blocking I/O je vhodný pro aplikace, kde je čekání na I/O operace přijatelné nebo očekávané, zatímco non-blocking I/O je vhodný pro aplikace, které vyžadují vysokou propustnost a odezvu
+
+4. Příklady použití blocking a non-blocking I/O:
+   - Blocking I/O: Jednoduché servery, které obsluhují malý počet klientů nebo aplikace, které nevyžadují vysokou propustnost
+   - Non-blocking I/O: Webové servery, databázové servery nebo aplikace, které obsluhují velké množství současných spojení nebo vyžadují rychlou odezvu
+
+Blocking a non-blocking I/O představují dva různé přístupy k vstupu/výstupu v aplikacích. Blocking I/O je jednodušší na implementaci, ale může vést k nižšímu výkonu. Non-blocking I/O poskytuje lepší výkon, ale vyžaduje více pozornosti k správě asynchronních operací.
+
+### threading server
+
+1. Co je vícevláknový server?
+   - Vícevláknový server je typ serveru, který používá více vláken pro obsluhu více klientů nebo požadavků současně
+   - Každé vlákno zpracovává jeden nebo více klientů nezávisle na ostatních vláknech
+
+2. Výhody vícevláknového serveru:
+   - Lepší využití zdrojů: Vícevláknový server může efektivněji využívat zdroje procesoru a paměti, což zlepšuje výkon a propustnost
+   - Rychlejší odezva: Vícevláknový server může poskytovat rychlejší odezvu na požadavky klientů, protože jednotlivá vlákna mohou pracovat paralelně a zpracovávat více požadavků současně
+   - Škálovatelnost: Vícevláknový server může lépe zvládat zvýšenou zátěž, protože může vytvářet a zrušit vlákna podle potřeby
+
+3. Nevýhody vícevláknového serveru:
+   - Složitost: Vícevláknový server může být složitější na implementaci a správu, protože vyžaduje koordinaci a synchronizaci mezi vlákny
+   - Režie: Vytváření a zrušení vláken může způsobit režii, která může snížit výkon serveru
+   - Sdílené prostředky: Vlákna musí sdílet prostředky, jako je paměť a procesor, což může vést k problémům s výkonem a synchronizací
+
+4. Použití vícevláknového serveru:
+   - Vícevláknový server je vhodný pro aplikace, které vyžadují vysokou propustnost a rychlou odezvu, jako jsou webové servery, databázové servery nebo aplikace pro zpracování videa
+
+
+### event-driven server
+
+1. Co je událostmi řízený server?
+   - Událostmi řízený server je typ serveru, který zpracovává požadavky klientů na základě událostí, jako jsou příchozí data nebo změny stavu spojení
+   - Server reaguje na události pomocí asynchronních I/O operací a zpracovává požadavky klientů bez potřeby vytvářet samostatná vlákna nebo procesy pro každé spojení
+
+2. Výhody událostmi řízeného serveru:
+   - Nižší režie: Událostmi řízený server má nižší režii než vícevláknový server, protože nepotřebuje vytvářet a zrušit vlákna pro každé spojení
+   - Škálovatelnost: Událostmi řízený server může zvládat velký počet současných spojení s menšími nároky na systémové zdroje
+   - Jednodušší koordinace: Událostmi řízený server může být jednodušší na koordinaci a správu než vícevláknový server, protože většina operací je asynchronní a nemusí být koordinována s ostatními vlákny
+
+3. Nevýhody událostmi řízeného serveru:
+   - Složitost: Událostmi řízený server může být složitější na implementaci, protože vyžaduje správu asynchronních událostí a I/O operací
+   - Výkon: Událostmi řízený server může mít nižší výkon než vícevláknový server, pokud je zátěž serveru nevyvážená nebo pokud server musí provádět náročné výpočetní úkoly
+
+4. Použití událostmi řízeného serveru:
+   - Událostmi řízený server je vhodný pro aplikace, které potřebují zvládat velké množství současných spojení s nízkou režií, jako jsou webové servery, proxy servery nebo aplikace pro zpracování zpráv
+
+Událostmi řízený server představuje přístup k zpracování požadavků klientů, který se zaměřuje na asynchronní I/O operace a reaguje na události, jako jsou příchozí data nebo změny stavu spojení. Je vhodný pro aplikace, které potřebují zvládat velké množství současných spo
+
+### Event-based input/output approaches
+
+
+1. Co je událostmi řízený vstup/výstup (event-based I/O)?
+   - Událostmi řízený vstup/výstup je asynchronní způsob zpracování I/O operací, který reaguje na události, jako jsou příchozí data nebo změny stavu spojení
+   - Tento přístup umožňuje efektivně zpracovávat velké množství současných spojení s nízkou režií a vysokou propustností
+
+2. Přístupy k událostmi řízenému vstupu/výstupu:
+
+   a) Reactor pattern (Reaktor vzor):
+      - Reaktor vzor je návrhový vzor, který řídí událostmi řízený vstup/výstup pomocí jednoho nebo více demultiplexorů událostí
+      - Demultiplexor událostí sleduje události na více I/O zdrojích a spouští příslušné obslužné rutiny, které zpracovávají události
+      - Reaktor vzor je vhodný pro aplikace s malým počtem současných spojení, které vyžadují rychlou odezvu na události
+
+   b) Proactor pattern (Proaktor vzor):
+      - Proaktor vzor je návrhový vzor, který řídí událostmi řízený vstup/výstup pomocí asynchronních I/O operací a plánovače událostí
+      - Plánovač událostí zodpovídá za řízení a spouštění asynchronních I/O operací a obslužných rutin, které zpracovávají události
+      - Proaktor vzor je vhodný pro aplikace s velkým počtem současných spojení, které vyžadují vysokou propustnost a efektivní využití systémových zdrojů
+
+3. Porovnání událostmi řízených přístupů k vstupu/výstupu:
+   - Reactor pattern:
+      - Výhody: Jednodušší na implementaci, rychlá odezva na události
+      - Nevýhody: Nižší propustnost při velkém počtu současných spojení, vyšší režie při demultiplexingu událostí
+   - Proactor pattern:
+      - Výhody: Vysoká propustnost, efektivní využití systémových zdrojů, snížená režie při zpracování událostí
+      - Nevýhody: Složitější na implementaci, může vyžadovat specifickou podporu asynchronních I/O operací ze strany operačního systému
+
+4. Použití událostmi řízených přístupů k vstupu/výstupu:
+   - Událostmi řízené přístupy k vstupu/výstupu se používají v širokém spektru aplikací, které vyžadují efektivní zpracování velkého počtu současných spojení, jako jsou webové servery, proxy servery, aplikace pro zpracování zpráv nebo databázové servery
+
+Událostmi řízené přístupy k vstupu/výstupu, jako jsou Reactor a Proactor vzory, umožňují efektivně zpracovávat velké množství současných spojení s nízkou režií a vysokou propustností. Tyto přístupy se používají v širokém spektru aplikací, které vyžadují efektivní zpracování velkého počtu současných spojení, jako jsou webové servery, proxy servery, aplikace pro zpracování zpráv nebo databázové servery.
+
+![alt text](webservers.png)
+
+![alt text](epoll1.png)
+![alt text](epoll2.png)
+
+### Native buffers in JVM, channels and selectors
+
+![alt text](javaperthread.png)
+![alt text](javanio1.png)
+![alt text](javanio2.png)
+![alt text](javanio3.png)
+![alt text](javanio4.png)
+![alt text](javanio5.png)
+
+1. Co jsou nativní buffery?
+   - Nativní buffery jsou oblasti paměti mimo Java heap, které slouží k ukládání a manipulaci s daty v rámci JVM
+   - Tyto buffery mohou být přímo přístupné pro nativní kód a operační systém, což umožňuje rychlejší a efektivnější zpracování dat než při použití běžných Java objektů
+
+2. Výhody nativních bufferů v JVM:
+   - Rychlost: Nativní buffery umožňují rychlejší zpracování dat, protože nejsou omezeny Java garbage collector a nemusí být kopírovány mezi Java heap a nativní pamětí
+   - Efektivita: Nativní buffery umožňují efektivnější využití systémových zdrojů, jako je paměť a I/O, protože mohou být přímo přístupné pro nativní kód a operační systém
+   - Kompatibilita: Nativní buffery usnadňují interakci mezi Java kódem a nativními knihovnami nebo operačním systémem, což umožňuje vytvářet výkonnější a škálovatelnější aplikace
+
+3. Použití nativních bufferů v JVM:
+   - Nativní buffery se často používají v JVM pro zlepšení výkonu a efektivity aplikací, které pracují s velkým množstvím dat nebo potřebují přímý přístup k nativním knihovnám a operačnímu systému
+   - Typické příklady zahrnují síťové I/O operace, grafické a multimediální aplikace, databázové servery nebo výkonnostně náročné výpočty
+
+Nativní buffery v JVM umožňují rychlejší a efektivnější zpracování dat než při použití běžných Java objektů, protože nejsou omezeny Java garbage collector a mohou být přímo přístupné pro nativní kód a operační systém. Tyto buffery se často používají pro zlepšení výkonu a efektivity aplikací, které pracují s velkým množstvím dat nebo potřebují přímý přístup k nativním knihovnám a operačnímu systému.
+
+1. Co jsou kanály a selektory?
+   - Kanály (Channels) jsou abstrakce, které umožňují efektivní a asynchronní komunikaci mezi Java kódem a I/O zdroji, jako jsou soubory, síťové sockety nebo datové proudy
+   - Selektory (Selectors) jsou komponenty, které sledují a řídí události na více kanálech současně, což umožňuje efektivní zpracování událostí a multiplexing I/O operací
+
+2. Výhody kanálů a selektorů:
+   - Efektivita: Kanály a selektory umožňují efektivní využití systémových zdrojů, jako je paměť a I/O, protože umožňují asynchronní a událostmi řízený přístup k I/O zdrojům
+   - Flexibilita: Kanály a selektory poskytují jednotné rozhraní pro různé typy I/O zdrojů, což usnadňuje vývoj a údržbu aplikací, které pracují s různými typy dat a komunikací
+   - Škálovatelnost: Kanály a selektory umožňují efektivní zpracování velkého počtu současných spojení, což je užitečné pro aplikace, které vyžadují vysokou propustnost a nízkou latenci
+
+3. Použití kanálů a selektorů v JVM:
+   - Kanály a selektory se používají v širokém spektru aplikací, které vyžadují efektivní zpracování I/O operací a komunikace, jako jsou webové servery, proxy servery, aplikace pro zpracování zpráv nebo databázové servery
+   - Kanály a selektory jsou součástí Java NIO (New Input/Output) knihovny, která poskytuje rozšířené a výkonné I/O funkce pro Java aplikace
+
+Kanály a selektory jsou klíčovými komponentami Java NIO knihovny, které umožňují efektivní a asynchronní komunikaci mezi Java kódem a I/O zdroji. Tyto komponenty se používají v širokém spektru aplikací, které vyžadují efektivní zpracování I/O operací a komunikace, jako jsou webové servery, proxy servery, aplikace pro zpracování zpráv nebo databázové servery.
+
+## Synchronization in multi-threaded programs (atomic operations, mutex, semaphore, rw-lock, spinlock, RCU). When to use which mechanism? Performance bottlenecks of the mentioned mechanisms. Synchronization in “read-mostly workloads”, advantages and disadvantages of different synchronization mechanisms.
