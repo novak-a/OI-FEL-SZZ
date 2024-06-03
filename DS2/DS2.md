@@ -490,6 +490,61 @@ Idempotence je v matematice, zejména v abstraktní algebře, vlastnost algebrai
   - UPDATE: Aktualizace záznamu
   - DELETE: Smazání záznamu nebo části záznamu
 
+Keyspaces v Apache Cassandra jsou obdobou databází v relačních databázových systémech (RDBMS). Jsou to nejvyšší kontejnery pro data v Cassandře a hrají klíčovou roli v organizaci dat, správě replikace a definování možností ukládání dat. Zde je podrobný přehled o keyspaces v Cassandře:
+
+Definice Keyspace
+Keyspace v Cassandře je jmenný prostor, který definuje replikaci dat na uzlech. Obsahuje sadu tabulek a je vytvořen pomocí specifické konfigurace, která definuje, jak jsou data replikována napříč clusterem.
+
+Vytvoření Keyspace
+Pro vytvoření keyspace se používá příkaz CREATE KEYSPACE. Tento příkaz zahrnuje specifikaci replikační strategie a dalších možností.
+
+Příklad:
+
+sql
+Copy code
+CREATE KEYSPACE my_keyspace
+WITH replication = {
+  'class': 'SimpleStrategy',
+  'replication_factor': 3
+};
+
+Column families (sloupce rodiny) v Apache Cassandra jsou základními stavebními kameny pro ukládání dat. Každá tabulka v Cassandře je ve skutečnosti sloupcová rodina, což znamená, že Cassandra je sloupcově orientovaná databáze. Zde je podrobný přehled o sloupcových rodinách v Cassandře:
+
+Struktura Column Family
+Row Key: Každá sloupcová rodina obsahuje řádky, které jsou identifikovány jedinečným klíčem řádku. Klíč řádku slouží jako primární klíč.
+
+Columns: Každá řádka obsahuje sadu sloupců. Každý sloupec má jméno, hodnotu a časovou značku (timestamp). Sloupce mohou být přidány nebo odstraněny dynamicky bez předchozího definování struktury.
+
+Super Columns: Jedná se o strukturu sloupce, který sám obsahuje další sloupce. Super sloupce nejsou běžně používané v moderních verzích Cassandry, ale je dobré o nich vědět pro historický kontext.
+
+Vytvoření Column Family
+Column family (tabulka) se vytváří pomocí příkazu CREATE TABLE. Při vytváření tabulky musíte definovat její název a sloupce.
+
+Příklad:
+
+sql
+Copy code
+CREATE TABLE users (
+    user_id UUID PRIMARY KEY,
+    username TEXT,
+    email TEXT,
+    age INT
+);
+Primární Klíče
+Partition Key: Hlavní část primárního klíče, která určuje, jak jsou data rozložena napříč uzly v clusteru.
+Clustering Columns: Umožňují řadit a organizovat data uvnitř partice.
+Příklad s kombinovaným primárním klíčem:
+
+sql
+Copy code
+CREATE TABLE orders (
+    user_id UUID,
+    order_id UUID,
+    product_id UUID,
+    order_date TIMESTAMP,
+    PRIMARY KEY (user_id, order_id)
+);
+
 CQL neumí joiny, takže je to extrémně rychlý
 
 
