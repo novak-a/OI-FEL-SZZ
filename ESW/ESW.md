@@ -1505,3 +1505,96 @@ Nativní buffery v JVM umožňují rychlejší a efektivnější zpracování da
 Kanály a selektory jsou klíčovými komponentami Java NIO knihovny, které umožňují efektivní a asynchronní komunikaci mezi Java kódem a I/O zdroji. Tyto komponenty se používají v širokém spektru aplikací, které vyžadují efektivní zpracování I/O operací a komunikace, jako jsou webové servery, proxy servery, aplikace pro zpracování zpráv nebo databázové servery.
 
 ## Synchronization in multi-threaded programs (atomic operations, mutex, semaphore, rw-lock, spinlock, RCU). When to use which mechanism? Performance bottlenecks of the mentioned mechanisms. Synchronization in “read-mostly workloads”, advantages and disadvantages of different synchronization mechanisms.
+
+### Synchronizace v multithreadových programech (atomické operace, mutex, semafor, rw-lock, spinlock, RCU). Kdy použít který mechanismus? Výkonnostní úzká místa zmíněných mechanismů:
+
+1. Atomické operace:
+   - Použití: Malé, jednoduché a rychlé operace, které mají garantovat konzistenci mezi vlákny
+   - Výkonnostní úzká místa: Omezená na jednoduché operace, může způsobit zpoždění v případě častých aktualizací dat
+
+2. Mutex:
+   - Použití: Vzájemné vyloučení přístupu k sdíleným zdrojům, vhodné pro krátké kritické sekce
+   - Výkonnostní úzká místa: Může způsobit zpoždění, pokud je přístup k sdíleným zdrojům často blokován
+
+![alt text](mutex.png)
+3. Semafor:
+   - Použití: Omezení počtu současně prováděných operací, například při omezení počtu současných spojení
+   - Výkonnostní úzká místa: Může způsobit zpoždění v případě velkého počtu vláken čekajících na uvolnění semaforu
+   - semafor je to samý jako mutex, jen pustí víc lidí dovnitř
+-  
+1. Rw-lock:
+   - Použití: Oddělení čtecích a zapisovacích operací pro sdílené zdroje, vhodné pro situace s častými čtecími operacemi a méně častými zapisovacími operacemi
+   - Výkonnostní úzká místa: Může způsobit zpoždění, pokud zapisovací operace často blokují čtecí operace
+
+![alt text](rw.png)
+
+5. Spinlock:
+   - Použití: Vzájemné vyloučení přístupu k sdíleným zdrojům, vhodné pro velmi krátké kritické sekce, kde je očekávání na uvolnění zámku krátké
+   - Výkonnostní úzká místa: Může způsobit zvýšení vytížení procesoru, pokud vlákna čekají na uvolnění zámku po delší dobu
+
+6. RCU (Read-Copy-Update):
+   - Použití: Synchronizace čtecích a zapisovacích operací pro sdílené zdroje bez použití zámků, vhodné pro situace s častými čtecími operacemi a méně častými zapisovacími operacemi
+   - Výkonnostní úzká místa: Může způsobit zpoždění v případě častých zapisovacích operací nebo velkého množství vláken, kvůli nutnosti provádět čištění paměti a koordinaci mezi vlákny
+  
+  ![alt text](rcu.png)
+  ![alt text](rcu1.png)
+  ![alt text](rcu2.png)
+  ![alt text](rcu3.png)
+
+Při výběru synchronizačního mechanismu je důležité zvážit následující faktory:
+
+- Četnost a typ operací (čtení, zápis) prováděných na sdílených zdrojích
+- Počet vláken, které přistupují k sdíleným zdrojům
+- Očekávané doby čekání na zámky nebo jiné synchronizační mechanismy
+- Důležitost výkonu a škálovatelnosti aplikace
+
+Výběr vhodného synchronizačního mechanismu může mít významný dopad na výkon a škálovatelnost aplikace. Je důležité provádět testy a analýzu výkonu, aby bylo zajištěno, že zvolený mechanismus splňuje požadavky aplikace a nepředstavuje výkonnostní úzká místa.
+
+RCU (Read-Copy-Update) je synchronizační mechanismus používaný v operačních systémech, zejména v Linuxu, pro účely škálovatelného a efektivního řízení souběhu přístupu k datovým strukturám. RCU je navržen tak, aby umožňoval čtení datových struktur téměř bez zamykání, zatímco zápisy provádějí změny způsobem, který minimalizuje dopad na čtenáře. Zde je krok po kroku popis fungování RCU:
+
+### 1. Čtení (Read)
+
+Čtení v RCU je velmi rychlé a téměř bez zamykání:
+- **Start kritické sekce čtení:** Čtenář zahájí kritickou sekci pomocí `rcu_read_lock()`. Toto nezpůsobuje žádné skutečné zamčení, ale může zaručit, že čtenář udržuje jistou dobu trvání čtení.
+- **Přístup k datům:** Čtenář přistupuje k datové struktuře přímo, aniž by musel získat zámek.
+- **Konec kritické sekce čtení:** Čtenář ukončí kritickou sekci pomocí `rcu_read_unlock()`. To také nezpůsobuje žádné skutečné odemčení, ale signalizuje, že čtenář je hotov s přístupem k datům.
+
+### 2. Zápis (Update)
+Zápis do datové struktury v RCU zahrnuje více kroků:
+- **Příprava nové verze:** Zapisovatel vytvoří novou verzi datové struktury nebo její části. Tato nová verze je často vytvořena jako kopie existující verze s potřebnými změnami.
+- **Provedení změny:** Zapisovatel provede změny na nové kopii datové struktury.
+- **Aktualizace ukazatele:** Zapisovatel atomicky aktualizuje ukazatel na datovou strukturu tak, aby ukazoval na novou verzi. Tento krok zajistí, že čtenáři začnou okamžitě přistupovat k nové verzi.
+- **Čekání na dokončení čtení:** Zapisovatel volá `synchronize_rcu()`, aby zajistil, že všechny předchozí čtecí operace, které začaly před aktualizací ukazatele, jsou dokončeny. `synchronize_rcu()` čeká, dokud všechny probíhající čtení nejsou dokončeny.
+- **Uvolnění staré verze:** Po dokončení `synchronize_rcu()` může být stará verze datové struktury bezpečně uvolněna, protože žádný čtenář ji již nepoužívá.
+
+### 3. Synchronizace (Synchronize)
+RCU poskytuje mechanismy pro synchronizaci, které zajistí, že všechny probíhající čtecí operace jsou dokončeny předtím, než se stará verze datové struktury uvolní:
+- **synchronize_rcu():** Tato funkce čeká, dokud všechny probíhající RCU kritické sekce čtení nejsou dokončeny. To znamená, že jakmile `synchronize_rcu()` vrátí, žádný čtenář již nepřistupuje ke staré verzi datové struktury.
+
+V tomto příkladu čtenář může číst hodnotu téměř bez zamykání, zatímco zapisovatel bezpečně aktualizuje hodnotu a čeká na dokončení všech probíhajících čtení před uvolněním staré verze.
+
+RCU je velmi efektivní způsob řízení souběhu v prostředí s převážně čtecími operacemi, kde minimalizuje latenci a zvyšuje škálovatelnost systému.
+
+Threads must call rcu_quiescent_state() from time to time (e.g. in the main event loop). (update counter)
+
+### Synchronizace v "read-mostly workloads" (práce s převážně čtecími operacemi), výhody a nevýhody různých synchronizačních mechanismů:
+
+1. Atomické operace:
+   - Výhody: Rychlé, jednoduché a bez zámku
+   - Nevýhody: Omezené na jednoduché operace, méně vhodné pro složitější sdílené struktury
+
+2. Mutex:
+   - Výhody: Zajišťuje vzájemné vyloučení přístupu k sdíleným zdrojům
+   - Nevýhody: Může způsobit zpoždění, pokud je přístup k sdíleným zdrojům často blokován
+
+3. Read-write lock (rw-lock):
+   - Výhody: Umožňuje paralelní čtení, odděluje čtecí a zapisovací operace
+   - Nevýhody: Může způsobit zpoždění, pokud zapisovací operace často blokují čtecí operace
+
+4. RCU (Read-Copy-Update):
+   - Výhody: Bez zámku, umožňuje efektivní čtení bez blokování
+   - Nevýhody: Může způsobit zpoždění v případě častých zapisovacích operací, kvůli nutnosti provádět čištění paměti a koordinaci mezi vlákny
+
+Pro read-mostly workloads, kde je většina operací čtecích a zapisovací operace jsou méně časté, jsou vhodné mechanismy, které minimalizují dopad zapisovacích operací na čtecí operace a umožňují efektivní paralelní čtení. Mezi takové mechanismy patří rw-lock a RCU.
+
+
