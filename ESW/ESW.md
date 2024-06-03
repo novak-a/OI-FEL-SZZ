@@ -376,13 +376,63 @@ Nevýhody použití generační hypotézy:
 - Vyšší složitost implementace garbage collectoru
 - Možná suboptimální výkon v případech, kdy hypotéza neodpovídá skutečnému chování aplikace
 
-## Garbage Collectory:
+### Garbage Collectory:
 
 - Součást automatické správy paměti v runtime prostředích, jako je Java Virtual Machine (JVM)
 - Starají se o automatické uvolňování paměti, která již není používána (nepotřebné objekty)
 - Zajišťují, že aplikace nevyčerpá dostupnou paměť a snižují riziko úniků paměti
 
 ![alt text](gc4.png)
+
+**Serial Collector**
+
+kontext: Nejstarší a nejjednodušší forma garbage collection v Javě, využívající jeden vlákno.
+
+Výhody: Jednoduchost a minimální využití zdrojů, což ho činí ideálním pro malé aplikace.
+
+Nevýhody: Způsobuje pauzy aplikace, nevhodný pro větší nebo interaktivní aplikace.
+
+Použití: Malé aplikace nebo prostředí, kde je omezený výpočetní výkon a paměť.
+
+**Paralelní sběrač (Throughput Collector)**
+
+kontext: Zvyšuje výkon použitím více vláken pro garbage collection, optimalizovaný pro propustnost.
+
+Výhody: Lepší využití vícejádrových procesorů, vhodný pro aplikace, kde je prioritou propustnost.
+
+Nevýhody: Mohou se objevit delší pauzy při GC, což ovlivňuje výkon v reálném čase.
+
+Použití: Serverové a dávkové zpracování, kde je vysoká propustnost nezbytná a delší pauzy jsou přijatelné.
+
+**Garbage First (G1) Collector**
+
+kontext: Moderní sběrač navržený k dosažení předvídatelného času pauzy správou haldy v malých oblastech a prioritizací garbage collection v oblastech s nejvíce obnovitelným prostorem.
+
+Oblasti haldy: Dělí haldu na mnoho malých oblastí, které jsou ošetřovány individuálně, což umožňuje sběrači zaměřit se na oblasti s nejvíce odpady pro optimalizaci času pauzy.
+
+Výhody: Předvídatelné pauzy GC, efektivní správa velkých hald a zlepšený výkon ve vícejádrových prostředích.
+
+Nevýhody: Složitá konfigurace a potenciální režijní náklady z řízení více oblastí a metadat.
+
+Použití: Velké, vícejádrové aplikace, kde jsou prioritou nízké časy pauz a efektivní správa haldy.
+
+![alt text](g1gc1.png)
+![alt text](g1gc2.png)
+![alt text](g1gc3.png)
+![alt text](g1gc4.png)
+![alt text](g1gc5.png)
+![alt text](g1gc6.png)
+![alt text](g1gc7.png)
+![alt text](rememberset.png)
+
+Využívá několik technik pro optimalizaci správy paměti, například dělení haldy na malé regiony a prioritizaci regionů s nejvíce nevyužitelným místem k uvolnění. Hlavní činnosti G1 zahrnují:
+
+- Menší sběry (Minor Collections): Zpracovávají regiony Eden a Survivor a kopírují přežívající objekty do nových Survivor regionů.
+- Smíšené sběry (Mixed Collections): Zahrnují regiony Eden, Survivor a vybrané staré regiony.
+- Plné sběry (Full Collections): Logicky dělí starou generaci na regiony a provádí paralelní značkování a kompakci.
+  
+G1 poskytuje predikovatelné pauzy a efektivní správu velkých hald, což ho činí vhodným pro víceprocesorové prostředí s požadavkem na nízké pauzy. Některé nevýhody zahrnují složitost konfigurace a potenciální režijní náklady spojené s řízením více regionů a metadat​
+
 Některé typy garbage collectorů:
 
 1. Mark and Sweep (Označit a Zamést):
@@ -395,26 +445,88 @@ Některé typy garbage collectorů:
 ![alt text](gc2.png)
 ![alt text](gc3.png)
 
-2. Copying (Kopírování):
-   - Paměť je rozdělena na dvě poloviny: Aktivní a rezervní
-   - Živé objekty jsou kopírovány z aktivní do rezervní paměti
-   - Jakmile jsou všechny živé objekty kopírovány, celá aktivní paměť je uvolněna
-   - Nevýhody: Vyžaduje více paměti, protože je rozdělena na dvě části, a může způsobit zpoždění při provádění garbage collection
-
-3. Generational (Generační):
+2. Generational (Generační):
    - Paměť je rozdělena na mladou a starou generaci
    - Využívá generační hypotézu pro efektivnější garbage collection
    - Častěji provádí garbage collection v mladé generaci, kde je vyšší pravděpodobnost uvolnění paměti
    - Výhody: Snížení režie a zátěže systému, minimalizace zpoždění způsobených garbage collection
    - Nevýhody: Vyšší složitost implementace
 
-4. Concurrent (Souběžný):
-   - Provádí garbage collection současně s během aplikace, bez nutnosti zastavit všechna vlákna
-   - Výhody: Snížení zpoždění a přerušení způsobených garbage collection, lepší výkon aplikace
-   - Nevýhody: Vyšší složitost implementace a koordinace s běžícími vlákny
 
-5. Incremental (Inkrementální):
-   - Rozděluje garbage collection do menších částí, které jsou prováděny postupně
-   - Výhody: Snížení zpoždění a přerušení způsoben
-  
-### CPU and memory proﬁling, sampling and tracing approach, warm-up phase
+### TLAB
+
+V Javě se TLAB (Thread-Local Allocation Buffer) používá pro efektivní přidělování paměti v vícevláknových aplikacích. TLAB je speciální oblast v hromadě paměti (heap), která je přidělena každému vláknu zvlášť. Toto umožňuje vláknum provádět alokace paměti bez nutnosti synchronizace s ostatními vlákny, což značně zlepšuje výkon.
+
+### CPU and memory proﬁling
+
+- Techniky používané pro analýzu výkonu a chování aplikace s ohledem na zpracování CPU a využití paměti
+- Cílem je identifikovat horké body (bottlenecks), optimalizovat výkon a zlepšit paměťovou efektivitu aplikace
+
+CPU profiling:
+
+- Zaměřuje se na měření a analýzu výkonu aplikace v souvislosti s využitím procesoru
+- Identifikuje funkce a části kódu, které vyžadují nejvíce času na zpracování
+- Pomáhá zjistit, kde lze provést optimalizace kódu pro zlepšení celkového výkonu aplikace
+
+Metody CPU profilingu:
+
+1. Sampling (vzorkování): Pravidelně sbírá informace o zásobníku volání (call stack) během běhu aplikace
+2. Instrumentace: Vkládá sledovací kód přímo do aplikace, který zaznamenává informace o výkonu a zátěži CPU
+
+Paměťový profiling:
+- Zaměřuje se na analýzu využití paměti aplikací
+- Identifikuje objekty, které způsobují zvýšené využití paměti, úniky paměti nebo fragmentaci paměti
+- Pomáhá zjistit, jak lze zlepšit paměťovou efektivitu a snížit nároky na paměť aplikace
+
+Metody paměťového profilingu:
+1. Heap snapshot (snímek haldy): Zaznamenává stav paměti (haldy) v určitém čase, identifikuje objekty a jejich velikosti
+2. Allocation tracking (sledování alokace): Sleduje vytváření a uvolňování objektů v paměti během běhu aplikace
+3. Garbage collection profiling: Analyzuje chování garbage collectoru, identifikuje dlouhotrvající operace a možné optimalizace
+
+Nástroje pro CPU a paměťový profiling:
+- Existuje mnoho nástrojů a knihoven pro různé jazyky a prostředí, například:
+  - VisualVM (pro Java)
+  - Valgrind (pro C/C++)
+  - Py-Spy (pro Python)
+  - Ruby-prof (pro Ruby)
+
+
+### sampling and tracing approach
+
+Dvě hlavní metody používané při profilování výkonu aplikací, zejména v souvislosti s CPU a paměťovým profilingem
+
+Sampling periodically checks the application's state at intervals, capturing the current function call stack.
+
+Tracing, also known as instrumentation, involves monitoring every function call, return, and sometimes other significant events within the application. This method modifies the code to add logging or monitoring instructions, which report these events to the profiler.
+
+Vzorkování (Sampling):
+
+- Pravidelně sbírá informace o zásobníku volání (call stack) během běhu aplikace
+- Zkoumá výkon aplikace v pravidelných intervalech a zaznamenává aktuální stav
+- Menší režie než u trasování, protože se nezasahuje do každé funkce nebo události
+- Méně přesné než trasování, protože data jsou založena na vzorcích a mohou být ovlivněna časováním nebo frekvencí vzorkování
+
+Trasování (Tracing):
+
+- Vkládá sledovací kód přímo do aplikace, který zaznamenává informace o výkonu a zátěži
+- Sleduje všechny funkce, události a interakce v aplikaci, což poskytuje detailní informace o výkonu
+- Vyšší režie než u vzorkování, protože se zaznamenává každá funkce a událost
+- Přesnější než vzorkování, protože data jsou založena na skutečném chování aplikace, nikoli na vzorcích
+
+Kdy použít vzorkování nebo trasování:
+
+- Vzorkování je vhodné pro rychlou a hrubou analýzu výkonu aplikace, kde je důležitější minimalizace režie než přesnost dat
+- Trasování je vhodné pro detailní a přesnou analýzu výkonu aplikace, kde je důležitější získat kompletní informace o chování aplikace než minimalizovat režii
+- Ve většině případů je vhodné použít kombinaci obou přístupů pro dosažení nejlepších výsledků při analýze výkonu aplikace
+
+### warm-up phase
+
+- Období, kdy se aplikace nebo systém rozehřívá a dosahuje optimálního výkonu
+- Během fáze rozehřátí může aplikace nebo systém provádět různé inicializační úkoly, kompilaci, optimalizace nebo jiné nastavení
+- Výkon aplikace nebo systému během fáze rozehřátí může být pomalejší než po dosažení optimálního výkonu
+
+Důvody pro fázi rozehřátí:
+
+1. Just-In-Time (JIT) kompilace: Aplikace založené na bytecode, jako je Java, používají JIT kompilátor pro kompilaci bytecode na strojový kód během runtime. Tato kompilace může trvat určitý čas a zpočátku zpomalit výkon.
+2. Profilování a optimalizace: Aplikace nebo systém mohou provádět profilování a optimalizace během fáze rozehřátí, což může způsobit zpoždění v dosažení plného výkonu.
+3. Cache a přednačítání: Aplikace mohou mít cache nebo přednačítání dat, které mohou být potřeba pro rychlejší běh. Tyto cache nebo přednačítaná data se mohou postupně naplňovat během fáze rozehřátí.
