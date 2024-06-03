@@ -1552,14 +1552,14 @@ Výběr vhodného synchronizačního mechanismu může mít významný dopad na 
 
 RCU (Read-Copy-Update) je synchronizační mechanismus používaný v operačních systémech, zejména v Linuxu, pro účely škálovatelného a efektivního řízení souběhu přístupu k datovým strukturám. RCU je navržen tak, aby umožňoval čtení datových struktur téměř bez zamykání, zatímco zápisy provádějí změny způsobem, který minimalizuje dopad na čtenáře. Zde je krok po kroku popis fungování RCU:
 
-### 1. Čtení (Read)
+#### 1. Čtení (Read)
 
 Čtení v RCU je velmi rychlé a téměř bez zamykání:
 - **Start kritické sekce čtení:** Čtenář zahájí kritickou sekci pomocí `rcu_read_lock()`. Toto nezpůsobuje žádné skutečné zamčení, ale může zaručit, že čtenář udržuje jistou dobu trvání čtení.
 - **Přístup k datům:** Čtenář přistupuje k datové struktuře přímo, aniž by musel získat zámek.
 - **Konec kritické sekce čtení:** Čtenář ukončí kritickou sekci pomocí `rcu_read_unlock()`. To také nezpůsobuje žádné skutečné odemčení, ale signalizuje, že čtenář je hotov s přístupem k datům.
 
-### 2. Zápis (Update)
+#### 2. Zápis (Update)
 Zápis do datové struktury v RCU zahrnuje více kroků:
 - **Příprava nové verze:** Zapisovatel vytvoří novou verzi datové struktury nebo její části. Tato nová verze je často vytvořena jako kopie existující verze s potřebnými změnami.
 - **Provedení změny:** Zapisovatel provede změny na nové kopii datové struktury.
@@ -1567,7 +1567,7 @@ Zápis do datové struktury v RCU zahrnuje více kroků:
 - **Čekání na dokončení čtení:** Zapisovatel volá `synchronize_rcu()`, aby zajistil, že všechny předchozí čtecí operace, které začaly před aktualizací ukazatele, jsou dokončeny. `synchronize_rcu()` čeká, dokud všechny probíhající čtení nejsou dokončeny.
 - **Uvolnění staré verze:** Po dokončení `synchronize_rcu()` může být stará verze datové struktury bezpečně uvolněna, protože žádný čtenář ji již nepoužívá.
 
-### 3. Synchronizace (Synchronize)
+#### 3. Synchronizace (Synchronize)
 RCU poskytuje mechanismy pro synchronizaci, které zajistí, že všechny probíhající čtecí operace jsou dokončeny předtím, než se stará verze datové struktury uvolní:
 - **synchronize_rcu():** Tato funkce čeká, dokud všechny probíhající RCU kritické sekce čtení nejsou dokončeny. To znamená, že jakmile `synchronize_rcu()` vrátí, žádný čtenář již nepřistupuje ke staré verzi datové struktury.
 
