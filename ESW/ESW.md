@@ -3,11 +3,11 @@
 
 ## Questions
 
-- Java Virtual Machine, memory layout, frame, stack-oriented machine processing, ordinary object pointer, compressed ordinary object pointer. JVM bytecode, Just-in-time compiler, tired compilation, on-stack replacement, disassembler, decompiler. Global and local safe point, time to safe point. Automatic memory Management, generational hypothesis, garbage collectors. CPU and memory proﬁling, sampling and tracing approach, warm-up phase.
+- Java Virtual Machine, memory layout, frame, stack-oriented machine processing, ordinary object pointer, compressed ordinary object pointer. JVM bytecode, Just-in-time compiler, tired compilation, on-stack replacement, disassembler, decompiler. Global and local safe point, time to safe point. Automatic memory Management, generational hypothesis, garbage collectors. CPU and memory profiling, sampling and tracing approach, warm-up phase.
 
-- Data races, CPU pipelining and superscalar architecture, memory barrier, volatile variable. Synchronization - thin, fat and biased locking, reentrant locks. Atomic operations based on compare-and-set instructions, atomic ﬁeld updaters. Non-blocking algorithms, wait free algorithms, non-blocking stack (LIFO).
+- Data races, CPU pipelining and superscalar architecture, memory barrier, volatile variable. Synchronization - thin, fat and biased locking, reentrant locks. Atomic operations based on compare-and-set instructions, atomic field updaters. Non-blocking algorithms, wait free algorithms, non-blocking stack (LIFO).
 
-- Static and dynamic memory analysis, shallow and retained size, memory leak. Data Structures, Java primitives and objects, auto-boxing and unboxing, memory efficiency of complex data structures. Collection for performance, type speciﬁc collections, open addressing hashing, collision resolution schemes. Bloom ﬁlters, complexity, false positives, bloom ﬁlter extensions. Reference types - weak, soft, phantom.
+- Static and dynamic memory analysis, shallow and retained size, memory leak. Data Structures, Java primitives and objects, auto-boxing and unboxing, memory efficiency of complex data structures. Collection for performance, type specific collections, open addressing hashing, collision resolution schemes. Bloom filters, complexity, false positives, bloom filter extensions. Reference types - weak, soft, phantom.
 
 - JVM object allocation, thread-local allocation buffers, object escape analysis, data locality, non-uniform memory allocation.
 
@@ -17,10 +17,10 @@
 
 - Cache-efficient data structures and algorithms (e.g., matrix multiplication). Principles of cache memories, different kinds of cache misses. Self-evicting code, false sharing – what is it and how deal with it?
 
-- Proﬁling and optimizations of programs in compiled languages (e.g., C/C++). Hardware performance counters, proﬁle-guided optimization. Basics of C/C++ compilers, AST, intermediate representation, high-level and low-level optimization passes.
+- Profiling and optimizations of programs in compiled languages (e.g., C/C++). Hardware performance counters, profile-guided optimization. Basics of C/C++ compilers, AST, intermediate representation, high-level and low-level optimization passes.
 
 
-## Java Virtual Machine, memory layout, frame, stack-oriented machine processing, ordinary object pointer, compressed ordinary object pointer. JVM bytecode, Just-in-time compiler, tired compilation, on-stack replacement, disassembler, decompiler. Global and local safe point, time to safe point. Automatic memory Management, generational hypothesis, garbage collectors. CPU and memory proﬁling, sampling and tracing approach, warm-up phase.
+## Java Virtual Machine, memory layout, frame, stack-oriented machine processing, ordinary object pointer, compressed ordinary object pointer. JVM bytecode, Just-in-time compiler, tired compilation, on-stack replacement, disassembler, decompiler. Global and local safe point, time to safe point. Automatic memory Management, generational hypothesis, garbage collectors. CPU and memory profiling, sampling and tracing approach, warm-up phase.
 
 
 ### Java Virtual Machine (JVM)
@@ -457,7 +457,7 @@ Některé typy garbage collectorů:
 
 V Javě se TLAB (Thread-Local Allocation Buffer) používá pro efektivní přidělování paměti v vícevláknových aplikacích. TLAB je speciální oblast v hromadě paměti (heap), která je přidělena každému vláknu zvlášť. Toto umožňuje vláknum provádět alokace paměti bez nutnosti synchronizace s ostatními vlákny, což značně zlepšuje výkon.
 
-### CPU and memory proﬁling
+### CPU and memory profiling
 
 - Techniky používané pro analýzu výkonu a chování aplikace s ohledem na zpracování CPU a využití paměti
 - Cílem je identifikovat horké body (bottlenecks), optimalizovat výkon a zlepšit paměťovou efektivitu aplikace
@@ -538,7 +538,7 @@ Jak zohlednit fázi rozehřátí při testování výkonu:
   - Provedení několika krátkých běhů aplikace nebo testů před spuštěním hlavního testu
   - Použití statistických metod pro eliminaci nebo minimalizaci vlivu fáze rozehřátí na výsledky testů
 
-## Data races, CPU pipelining and superscalar architecture, memory barrier, volatile variable. Synchronization - thin, fat and biased locking, reentrant locks. Atomic operations based on compare-and-set instructions, atomic ﬁeld updaters. Non-blocking algorithms, wait free algorithms, non-blocking stack (LIFO).
+## Data races, CPU pipelining and superscalar architecture, memory barrier, volatile variable. Synchronization - thin, fat and biased locking, reentrant locks. Atomic operations based on compare-and-set instructions, atomic field updaters. Non-blocking algorithms, wait free algorithms, non-blocking stack (LIFO).
 
 ### Data races
 
@@ -677,7 +677,7 @@ Vlastnosti reentrant zámků:
 3. Mohou poskytnout pokročilé funkce, jako je podpora přerušitelného zamykání, časově omezené zamykání nebo spravedlivé plánování
 
 
-### Atomic operations based on compare-and-set instructions, atomic ﬁeld updaters
+### Atomic operations based on compare-and-set instructions, atomic field updaters
 
 - Atomické operace, které kombinují porovnání a nastavení hodnoty v jediném nesdíleném (atomic) kroku
 - Běžně používány pro implementaci bezpečných a efektivních synchronizačních mechanismů, jako jsou zámky, semafory nebo počítadla
@@ -792,7 +792,7 @@ Výhody nebokujícího zásobníku (LIFO):
 - Zvyšuje robustnost a spolehlivost paralelního kódu díky odstranění možnosti uváznutí a vyhladovění
 
 
-## Static and dynamic memory analysis, shallow and retained size, memory leak. Data Structures, Java primitives and objects, auto-boxing and unboxing, memory efficiency of complex data structures. Collection for performance, type speciﬁc collections, open addressing hashing, collision resolution schemes. Bloom ﬁlters, complexity, false positives, bloom ﬁlter extensions. Reference types - weak, soft, phantom.
+## Static and dynamic memory analysis, shallow and retained size, memory leak. Data Structures, Java primitives and objects, auto-boxing and unboxing, memory efficiency of complex data structures. Collection for performance, type specific collections, open addressing hashing, collision resolution schemes. Bloom filters, complexity, false positives, bloom filter extensions. Reference types - weak, soft, phantom.
 
 ### Static and dynamic memory analysis
 
@@ -1004,7 +1004,7 @@ Při výběru kolekce pro výkon zvažte následující faktory:
 4. Podpora pro konkurenci a synchronizaci (např. ConcurrentHashMap pro bezpečné použití ve vícevláknovém prostředí)
 
 
-### type speciﬁc collections
+### type specific collections
 
 Typově specifické kolekce jsou kolekce, které jsou navrženy pro ukládání primitivních datových typů nebo konkrétních tříd. Použití těchto kolekcí může zlepšit výkon a snížit režii paměti, protože se eliminuje potřeba autoboxingu a unboxingu.
 
@@ -1083,7 +1083,7 @@ Schémata řešení kolizí jsou metody, které se používají k řešení koli
    - Používá dvě úrovně hashovacích funkcí pro zajištění, že nebudou žádné kolize
    - První úroveň rozděluje prvky do skupin, druhá úroveň použije samostatnou hashovací funkci pro každou
    - 
-### Bloom ﬁlters, complexity, false positives, bloom ﬁlter extensions
+### Bloom filters, complexity, false positives, bloom filter extensions
 
 Bloom filtry jsou pravděpodobnostní datové struktury, které umožňují testování přítomnosti prvku v množině. Bloom filtry používají více hashovacích funkcí a bitové pole pro uložení informací o prvcích.
 
@@ -1597,4 +1597,231 @@ Threads must call rcu_quiescent_state() from time to time (e.g. in the main even
 
 Pro read-mostly workloads, kde je většina operací čtecích a zapisovací operace jsou méně časté, jsou vhodné mechanismy, které minimalizují dopad zapisovacích operací na čtecí operace a umožňují efektivní paralelní čtení. Mezi takové mechanismy patří rw-lock a RCU.
 
+## Cache-efficient data structures and algorithms (e.g., matrix multiplication). Principles of cache memories, different kinds of cache misses. Self-evicting code, false sharing – what is it and how deal with it?
 
+### Cache-efficient data structures and algorithms (e.g., matrix multiplication). 
+
+## Cache-efektivní datové struktury a algoritmy (např. násobení matic):
+
+Cache-efektivní datové struktury a algoritmy jsou navrženy tak, aby minimalizovaly přístupy k paměti a využily cache CPU co nejlépe. Příklady cache-efektivních datových struktur a algoritmů:
+
+1. Cache-oblivious algoritmy:
+   - Navrženy tak, aby efektivně využily cache bez znalosti velikosti cache nebo cache line
+   - Příklad: Cache-oblivious násobení matic, které rozdělí matice na menší bloky a provádí násobení bloků s efektivním využitím cache
+
+2. Cache-aware algoritmy:
+   - Navrženy s vědomím velikosti cache a cache line, což umožňuje maximalizovat využití cache
+   - Příklad: Cache-aware násobení matic, které rozdělí matice na bloky velikosti, která odpovídá velikosti cache, a násobí bloky efektivně
+
+3. B-stromy:
+   - Cache-efektivní stromová datová struktura, která má větší větve než binární stromy, což umožňuje efektivnější využití cache
+   - Příklad: B-stromy se používají v databázových systémech a souborových systémech pro efektivní vyhledávání a manipulaci s daty
+
+4. Bloom filtry:
+   - Cache-efektivní datová struktura, která umožňuje rychlé a efektivní testování přítomnosti prvku v množině s malou paměťovou náročností
+   - Příklad: Bloom filtry se používají pro rychlé vyhledávání v cache nebo pro detekci duplicitních dat
+
+5. Compact hash tabulky:
+   - Cache-efektivní varianta hash tabulek, která minimalizuje paměťovou náročnost a zlepšuje využití cache
+   - Příklad: Compact hash tabulky se používají pro rychlé vyhledávání a ukládání dat s malou paměťovou náročností
+
+Pro dosažení cache-efektivity je důležité brát v úvahu vlastnosti paměti cache, jako je velikost cache, cache line, asociativita a politika nahrazování. Cache-efektivní algoritmy a datové struktury mohou výrazně zlepšit výkon aplikace tím, že minimalizují přístupy k pomalejší hlavní paměti a maximalizují využití rychlé cache paměti.
+
+
+### Principles of cache memories, different kinds of cache misses. 
+
+Cache paměť je rychlá a menší paměť mezi CPU a hlavní pamětí (RAM), která zlepšuje výkon tím, že udržuje kopie často používaných dat z hlavní paměti. Cache paměť využívá vlastnosti prostorové a časové lokalitě přístupu k datům.
+
+Různé druhy cache chyb (misses):
+
+1. Compulsory miss (nevyhnutelná chyba):
+   - Způsobena prvním přístupem k datům, která nejsou v cache
+   - Nelze zcela eliminovat, může být minimalizováno efektivním přednačítáním dat do cache
+
+2. Capacity miss (kapacitní chyba):
+   - Způsobena omezenou kapacitou cache paměti, když je počet potřebných dat větší než velikost cache
+   - Může být zlepšeno zvětšením cache nebo využitím cache-efektivních algoritmů a datových struktur
+
+3. Conflict miss (konfliktní chyba):
+   - Způsobena kolizemi v cache záznamech, kdy různá data mapují na stejnou pozici v cache
+   - Může být zlepšeno zvýšením asociativity cache, použitím cache-oblivious nebo cache-aware algoritmů
+
+4. Coherence miss (koherenční chyba):
+   - Způsobena nekonzistencí mezi cache pamětí různých procesorů v multiprocesorovém systému
+   - Může být zlepšeno použitím koherentních protokolů a správných synchronizačních mechanismů
+
+Pro efektivní využití cache pamětí je důležité minimalizovat počet cache chyb a zohlednit vlastnosti cache, jako je velikost cache, cache line, asociativita a politika nahrazování. Cache-efektivní algoritmy a datové struktury mohou výrazně zlepšit výkon aplikace tím, že minimalizují přístupy k pomalejší hlavní paměti a maximalizují využití rychlé cache paměti.
+
+
+### Self-evicting code, false sharing – what is it and how deal with it?
+
+Self-evicting kód je kód, který je napsán tak, aby se záměrně vyhýbal využití cache paměti nebo z ní byl rychle vytlačen. Tento typ kódu může být užitečný v některých případech, například:
+
+1. Pro zabezpečení:
+   - Když chcete minimalizovat dobu, po kterou citlivá data zůstávají v cache paměti, a snížit tak riziko útoku, který by zneužil přístup k těmto datům (např. cache side-channel útoky)
+
+2. Pro účely vyvažování zátěže:
+   - Když chcete zajistit, že kritické části kódu nebudou vytlačeny z cache paměti méně důležitými částmi kódu, které by mohly vést k výkonnostním problémům
+
+Pro napsání self-evicting kódu je třeba použít techniky, které záměrně zhoršují vlastnosti prostorové a časové lokalitě přístupu k datům a zabraňují jejich uchování v cache paměti. Některé z těchto technik mohou zahrnovat:
+
+1. Použití nestandardních přístupových vzorů k datům
+2. Záměrné prokládání přístupu k různým datovým oblastem, aby byla zvýšena pravděpodobnost vytlačení dat z cache
+3. Použití technik, které ztěžují předpovědi větví, což zabraňuje efektivnímu přednačítání dat do cache
+
+Je důležité si uvědomit, že self-evicting kód může mít negativní dopad na výkon aplikace v důsledku zvýšených přístupů k pomalejší hlavní paměti. Použití self-evicting kódu by mělo být pečlivě zváženo a použito pouze tam, kde je to opravdu nezbytné.
+
+False sharing je situace, kdy více vláken v multiprocesorovém nebo multicore systému nezávisle přistupuje k různým datovým položkám, které jsou umístěny ve stejném bloku cache (cache line). Tento přístup může způsobit nežádoucí invalidaci cache line a zvýšení komunikace mezi procesory nebo jádry, což má za následek výkonnostní problémy.
+
+Jak se vypořádat s false sharingem:
+
+1. Zarovnání dat: 
+   - Zarovnejte často používaná data na hranice cache line, aby byla oddělena a nezpůsobovala false sharing. V některých jazycích (např. C/C++) lze použít direktivy pro zarovnání dat, jako je `alignas()`.
+
+2. Padding (vyplnění):
+   - Přidejte padding mezi datovými položkami, které jsou přístupné různými vlákny, aby byly umístěny ve vlastních cache lines. Padding může zahrnovat nevyužité proměnné nebo pole.
+
+3. Oddělení dat:
+   - Oddělte data, která jsou přístupná různými vlákny, do různých datových struktur nebo objektů, aby byla minimalizována pravděpodobnost false sharingu.
+
+4. Thread-local storage (úložiště pro vlákna):
+   - Pokud je to možné, použijte thread-local storage pro data, která jsou specifická pro jednotlivá vlákna. Tím se sníží potřeba sdílet data mezi vlákny a zároveň se minimalizuje false sharing.
+
+5. Použití optimalizací kompilátoru:
+   - Některé kompilátory mohou poskytovat optimalizace pro snížení false sharingu. Prozkoumejte možnosti optimalizace vašeho kompilátoru a zvažte jejich použití.
+
+6. Profiling a analýza:
+   - Použijte nástroje pro profiling a analýzu k identifikaci false sharingu ve vaší aplikaci. Tím získáte informace o kritických oblastech kódu, které mohou být zdrojem false sharingu a mohou být optimalizovány.
+
+Při práci s false sharingem je důležité najít rovnováhu mezi snižováním false sharingu a zachováním paměťové efektivity, protože některé z těchto technik mohou zvýšit paměťovou náročnost aplikace.
+
+
+## Profiling and optimizations of programs in compiled languages (e.g., C/C++). Hardware performance counters, profile-guided optimization. Basics of C/C++ compilers, AST, intermediate representation, high-level and low-level optimization passes.
+
+### Profiling and optimizations of programs in compiled languages (e.g., C/C++). 
+
+1. Profiling:
+   - Profiling je proces sběru dat o výkonu a chování programu za účelem identifikace oblastí, které lze optimalizovat. Nástroje pro profiling v C/C++ mohou zahrnovat:
+     - `gprof`: GNU profiler pro měření času stráveného v jednotlivých funkcích
+     - `perf`: Nástroj pro profiling na úrovni jádra Linuxu
+     - `Valgrind`: Nástroj pro analýzu paměti a profiling výkonu
+
+2. Optimalizace kompilátoru:
+   - Kompilátory jako GCC nebo Clang poskytují různé úrovně optimalizace, které lze nastavit pomocí přepínačů:
+     - `-O0`: Žádná optimalizace (výchozí)
+     - `-O1`: Optimalizace pro rychlost a velikost kódu
+     - `-O2`: Optimalizace pro rychlost (bez zvýšení velikosti kódu)
+     - `-O3`: Agresivní optimalizace pro rychlost (může zvýšit velikost kódu)
+     - `-Os`: Optimalizace pro velikost kódu
+     - `-Ofast`: Optimalizace pro nejvyšší rychlost (ignoruje striktní standardy)
+
+3. Optimalizace kódu:
+   - Ruční optimalizace kódu může zahrnovat následující techniky:
+     - Smyčkové optimalizace: unrolling, fusion, či blocking
+     - Minimalizace režie volání funkcí: inlining, tail call optimalizace
+     - Optimalizace paměťového přístupu: zarovnání dat, cache-friendly algoritmy
+     - Využití paralelismu: SIMD instrukce, vícevláknové programování
+     - Snížení režie synchronizace: atomické operace, lock-free algoritmy
+
+4. Analýza a ladění:
+   - Analyzujte a laděte svůj kód za účelem identifikace a řešení výkonnostních problémů, např. pomocí následujících nástrojů:
+     - `gdb`: GNU Debugger pro ladění programů
+     - `strace`: Nástroj pro sledování systémových volání a signálů
+     - `ltrace`: Nástroj pro sledování volání knihoven
+     - `vtune`: Profiler a ladící nástroj od Intelu
+     - 
+### Hardware performance counters
+
+Hardwarové čítače výkonu (Hardware Performance Counters, HPC) jsou speciální registry, které integrované do procesoru, umožňují sledovat různé aspekty výkonu a chování procesoru. Tyto čítače mohou poskytovat informace o:
+
+1. Počet provedených instrukcí
+2. Počet provedených cyklů
+3. Počet cache hitů a missů
+4. Počet branch (větvení) instrukcí a predikcí
+5. Počet zápisů a čtení z paměti
+6. Počet závislostí mezi instrukcemi
+7. Počet událostí souvisejících s pipeliningem
+
+Tyto informace lze použít k analýze výkonu programu a identifikaci úzkých míst nebo problémů, které lze optimalizovat. Některé nástroje pro práci s hardwarovými čítači výkonu zahrnují:
+
+- `perf`: Nástroj pro profiling na úrovni jádra Linuxu, který podporuje hardwarové čítače výkonu.
+- `PAPI`: Performance Application Programming Interface, multiplatformní knihovna pro práci s hardwarovými čítači výkonu.
+- `Intel VTune`: Profiler a ladící nástroj od Intelu, který podporuje hardwarové čítače výkonu.
+
+Při použití hardwarových čítačů výkonu je důležité mít na paměti, že jejich podpora a dostupnost se může lišit mezi různými procesory a architekturami.
+
+### profile-guided optimization
+
+Optimalizace řízená profilem (PGO) je technika optimalizace kompilátoru, která používá data získaná z profilingu běhu programu za účelem informování kompilátoru o tom, jak nejlépe optimalizovat kód. PGO zahrnuje následující kroky:
+
+1. Kompilace programu s přepínačem pro generování profilovacích informací (např. `-fprofile-generate` v GCC nebo Clang).
+2. Spuštění programu na reprezentativní sadě vstupů, které zahrnují typické scénáře použití, aby byly vygenerovány profilovací data.
+3. Opětovná kompilace programu s přepínačem pro využití profilovacích informací (např. `-fprofile-use` v GCC nebo Clang).
+
+PGO může přinést následující výhody:
+
+- Lepší optimalizace na úrovni zdrojového kódu: Kompilátor může zohlednit skutečné chování programu při volbě optimalizačních strategií.
+- Optimalizace inliningu funkcí: Kompilátor může lépe rozhodnout, které funkce by měly být inlinovány na základě jejich skutečného použití.
+- Optimalizace větvení: Kompilátor může předpovědět pravděpodobnost větvících instrukcí a generovat efektivnější kód.
+- Optimalizace rozložení kódu: Kompilátor může rozhodnout, jakým způsobem uspořádat kód v paměti pro snížení cache missů.
+
+Je důležité provést profiling na reprezentativní sadě vstupů, aby PGO mohla efektivně zlepšit výkon programu. PGO může mít významný dopad na výkon, ale jeho výsledky se mohou lišit v závislosti na konkrétním programu a jeho použití.
+
+### Basics of C/C++ compilers, AST, intermediate representation
+
+
+1. Abstract Syntax Tree (AST):
+   - AST je stromová struktura, která reprezentuje zdrojový kód programu ve formě, která je snadno zpracovatelná pro další analýzy a transformace.
+   - AST je vytvořen během syntaktické analýzy zdrojového kódu a zachycuje informace o struktuře kódu, např. deklarace, přiřazení, cykly a podmínky.
+   - AST slouží jako vstup pro další fáze kompilace, jako je sémantická analýza, optimalizace a generování kódu.
+
+2. Intermediální reprezentace (Intermediate Representation, IR):
+   - IR je zjednodušená reprezentace programu, která slouží jako mezikrok mezi AST a výsledným strojovým kódem.
+   - IR je navržen tak, aby byl snadno analyzovatelný a modifikovatelný pro optimalizace a transformace kódu.
+   - Existují různé formy IR, například:
+     - Three-Address Code (TAC): Lineární sekvence instrukcí, kde každá instrukce má nejvýše tři operandy.
+     - Static Single Assignment (SSA): IR, ve kterém je každá proměnná přiřazena pouze jednou.
+
+Kompilátory C/C++ jako GCC nebo Clang provádějí několik transformací a optimalizací na úrovni AST a IR před generováním výsledného strojového kódu. Tyto transformace a optimalizace mohou zahrnovat zjednodušení výrazů, inlining funkcí, eliminaci mrtvého kódu, propagaci konstant a mnoho dalších.
+
+![alt text](compilation1.png)
+
+**Preprocesor**
+
+Zdrojový kód je kód, který je napsán v textovém editoru a zdrojový soubor má příponu ".c". Tento zdrojový kód je nejprve předán preprocesoru, který tento kód rozšíří. Po rozšíření kódu je rozšířený kód předán kompilátoru.
+
+**Kompilátor**
+
+Kód, který byl rozšířen preprocesorem, je předán kompilátoru. Kompilátor tento kód převede do assemblerového kódu. Jinak řečeno, C kompilátor převede předzpracovaný kód do assemblerového kódu.
+
+**Assembler**
+
+Assemblerový kód je převeden na objektový kód pomocí assembleru. Název objektového souboru generovaného assemblerem je stejný jako název zdrojového souboru. Přípona objektového souboru je v DOSu '.obj' a v UNIXu '.o'. Pokud se zdrojový soubor jmenuje 'hello.c', pak název objektového souboru bude 'hello.obj'.
+
+**Linker**
+
+Většina programů napsaných v jazyce C používá knihovní funkce. Tyto knihovní funkce jsou předkompilované a objektový kód těchto knihovních souborů je uložen s příponou '.lib' (nebo '.a'). Hlavní úlohou linkeru je kombinovat objektový kód knihovních souborů s objektovým kódem našeho programu. Někdy nastane situace, kdy náš program odkazuje na funkce definované v jiných souborech; v takovém případě hraje linker velmi důležitou roli. Spojuje objektový kód těchto souborů s naším programem. Proto můžeme říci, že úkolem linkeru je spojit objektový kód našeho programu s objektovým kódem knihovních souborů a dalších souborů. Výstupem linkeru je spustitelný soubor. Název spustitelného souboru je stejný jako název zdrojového souboru, ale liší se pouze v příponách. V DOSu je příponou spustitelného souboru '.exe' a v UNIXu může být spustitelný soubor pojmenován jako 'a.out'. Například, pokud používáme funkci printf() v programu, pak linker přidá její přidružený kód do výstupního souboru.
+
+### high-level and low-level optimization passes
+
+1. Optimalizace na vysoké úrovni (High-Level Optimization):
+   - Tyto optimalizace se provádějí na úrovni zdrojového kódu nebo abstraktního syntaktického stromu (AST).
+   - Cílem je zlepšit výkon programu pomocí transformací, které využívají znalosti o struktuře a sémantice zdrojového kódu.
+   - Příklady optimalizací na vysoké úrovni:
+     - Zjednodušení výrazů
+     - Eliminace mrtvého kódu
+     - Zabalení (wrapping) a rozbalení (unwrapping) cyklů
+     - Rozdělení proměnných
+     - Odstraňování společných podvýrazů
+
+2. Optimalizace na nízké úrovni (Low-Level Optimization):
+   - Tyto optimalizace se provádějí na úrovni intermediální reprezentace (IR) nebo strojového kódu.
+   - Cílem je zlepšit výkon programu pomocí transformací, které využívají znalosti o architektuře procesoru a paměti.
+   - Příklady optimalizací na nízké úrovni:
+     - Alokační optimalizace registrů
+     - Inlining funkcí
+     - Sdílení registrů mezi proměnnými
+     - Optimalizace pipeliningu
+     - Optimalizace větvení
+
+Kompilátory C/C++ jako GCC nebo Clang provádějí řadu optimalizačních průchodů na vysoké i nízké úrovni před generováním výsledného strojového kódu. Tyto průchody mohou být řízeny pomocí přepínačů kompilátoru, které umožňují nastavit různé úrovně optimalizace, například `-O1`, `-O2`, `-O3` a `-Os`.
