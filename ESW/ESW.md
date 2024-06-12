@@ -1825,3 +1825,19 @@ Většina programů napsaných v jazyce C používá knihovní funkce. Tyto knih
      - Optimalizace větvení
 
 Kompilátory C/C++ jako GCC nebo Clang provádějí řadu optimalizačních průchodů na vysoké i nízké úrovni před generováním výsledného strojového kódu. Tyto průchody mohou být řízeny pomocí přepínačů kompilátoru, které umožňují nastavit různé úrovně optimalizace, například `-O1`, `-O2`, `-O3` a `-Os`.
+
+
+## Futex
+
+Futex (Fast Userspace Mutex) je rychlejší než tradiční mutexy kvůli způsobu, jakým minimalizuje náklady na přepínání kontextu a synchronizaci mezi uživatelským a kernelovým prostorem. Zde je podrobnější vysvětlení:
+
+Minimalizace systémových volání: Futexy většinou operují v uživatelském prostoru, což znamená, že mnoho operací, které by jinak vyžadovaly přepnutí do kernelového režimu, se provádí přímo v uživatelském prostoru. Systémové volání jsou relativně drahé, protože vyžadují přepnutí kontextu z uživatelského prostoru do kernelového prostoru a zpět. Tím, že se těmto voláním co nejvíce vyhýbají, futexy dosahují lepšího výkonu.
+
+Optimistický přístup: Futexy používají optimistický přístup, kde se předpokládá, že většina operací uzamčení a odemčení proběhne bez kolize. Pokud se při pokusu o uzamčení nezjistí žádný konflikt, není nutné provádět systémové volání. Pouze v případě konfliktu, kdy je nutné čekat na uvolnění zámku, se provede systémové volání do kernelového prostoru.
+
+Efektivní čekání: Když je nutné čekat, futex využívá efektivní mechanizmus čekání v kernelovém prostoru. Kernel přidá proces do fronty čekajících na konkrétní futex a usnadní probuzení všech čekajících procesů, jakmile je zámek uvolněn. Tento přístup minimalizuje zbytečné probuzení procesů a zajišťuje, že se procesy probouzejí pouze tehdy, když mohou pokračovat v práci.
+
+Redukce konkurence: Futexy také redukují konkurenci tím, že umožňují více vláken pracovat v uživatelském prostoru, aniž by musely neustále komunikovat s kernelovým prostorem. Tento přístup zvyšuje paralelismus a snižuje zahlcení kernelových zdrojů.
+
+Přímá podpora v kernelu: Linuxový kernel má přímou podporu pro futexy, což umožňuje jejich efektivní implementaci a využití. Kernel poskytuje rozhraní pro manipulaci s futexy, které zajišťuje, že operace čekání a probouzení jsou co nejefektivnější.
+
